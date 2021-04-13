@@ -1,23 +1,33 @@
 <template>
   <div id="login-main" class="bg1">
-    <div class="login-container">      
-      <!-- <form class="form text-center" action="includes/login.inc.php" method="POST"> -->
-
+    <div class="login-container" :class="estiloLogin().marco">      
+        <transition name="fade">
+          <div class='flecha-atras' v-if="loginAdmin" @click="switchLoginAdmin()">
+            <i class="fas fa-arrow-left"></i>
+          </div>
+        </transition>
+      
         <div>
           <img class="logo" src="../assets/images/aguila.png" alt="">
         </div>
         <h4 class="titulo">Evaluación Docente</h4>
-        
-        <p class="login-error-msg" v-if="true">
-          <i class="fas fa-exclamation-triangle"></i> Aquí va el mensaje de error.
-        </p>
+
+        <transition name="fade">
+          <h6 class="subtitulo" v-if="loginAdmin">Ingreso de personal administrativo</h6>
+        </transition>
+
+        <transition name="fade">
+          <p class="login-error-msg" v-if="errorLogin">
+            <i class="fas fa-exclamation-triangle"></i> {{ errorLogin }}
+          </p>
+        </transition>
         
         <div class="form-grupo">
-          <input type="text" name="usuario" id="log-usuario" class="form-input" placeholder=" " required>
-          <label for="log-usuario" class="form-label">Matrícula</label>
+          <input type="text" v-model="usuario" id="log-usuario" class="form-input" placeholder=" ">
+          <label for="log-usuario" class="form-label">{{ matriculaOUsuario() }}</label>
         </div>
         <div class="form-grupo">
-          <input type="password" name="password" id="log-password" class="form-input" placeholder=" " required>
+          <input type="password" v-model="password" id="log-password" class="form-input" placeholder=" ">
           <label for="log-password" class="form-label">Contraseña</label>
         </div>
         <input type="hidden" name="type" value="alumno">
@@ -25,13 +35,28 @@
         <br>
 
         <div>
-          <button type="submit" name="submit" class="form-button">Ingresar</button>
+          <button type="submit" class="form-button" @click="submit()">Ingresar</button>
         </div>
 
-        <br><br>
+        <br>
 
-        <p class="admin-login"><a href="login?admin=1">Ingreso de personal administrativo<i class="far fa-id-card"></i></a></p>
-      <!-- </form> -->
+        <transition name="fade">
+        <p class="mensaje-password" v-if="!loginAdmin">
+          <a>
+            ¿Aún no tienes contraseña?
+          </a>
+        </p>
+        </transition>
+
+        <br>
+
+        <transition name="fade">
+        <p class="admin-login" v-if="!loginAdmin">
+          <a @click="switchLoginAdmin()">
+            Ingreso de personal administrativo<i class="far fa-id-card"></i>
+          </a>
+        </p>
+        </transition>
     </div>
   </div>
 </template>
@@ -39,7 +64,36 @@
 <script>
 
 export default {
-  name: 'Login'
+  name: 'Login',
+  data() {
+    return {
+      loginAdmin: false,
+      errorLogin: null,
+      usuario: null,
+      password: null
+    };
+  },
+  methods: {
+    switchLoginAdmin() {
+      this.loginAdmin = !this.loginAdmin
+    },
+    estiloLogin() {
+      return {
+        bg: !this.loginAdmin ? 'bg1' : 'bg2',
+        marco: !this.loginAdmin ? '' : 'admin'
+      }
+    },
+    matriculaOUsuario() {
+      return !this.loginAdmin ? 'Matrícula' : 'Usuario'
+    },
+    submit() {
+      if (!this.usuario || !this.password) {
+        this.errorLogin = 'Completa todos los campos';
+      } else {
+        this.errorLogin = null;
+      }
+    }
+  }
 }
 
 </script>
@@ -63,6 +117,7 @@ export default {
 }
 
 #login-main .login-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -73,6 +128,7 @@ export default {
   border: 1px solid rgba(0, 0, 0, 0.2);
   background: #FFF;
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.3);
+  transition: border-color 0.4s;
 }
 
 #login-main .login-container.admin {
@@ -98,6 +154,14 @@ export default {
   font-weight: 600;
   margin-top: 18px;
   margin-bottom: 24px;
+}
+
+#login-main .subtitulo {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: rgb(22, 160, 68);
+  margin-top: 0px;
+  margin-bottom: 18px;
 }
 
 #login-main .form-grupo {
@@ -157,7 +221,7 @@ export default {
   color: #FFF;
   font-size: 1rem;
   padding: 8px;
-  background-color: rgb(33, 180, 106);
+  background-color: rgb(31, 180, 106);
   border: 0;
   border-radius: 7px;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
@@ -178,9 +242,10 @@ export default {
   height: 120px;
 }
 
-/* #login-main .admin-login {
-  text-align: right;
-} */
+#login-main .mensaje-password a {
+  color: rgb(31, 180, 106);
+  cursor: pointer;
+}
 
 #login-main .admin-login i {
   font-size: 22px;
@@ -191,10 +256,33 @@ export default {
 #login-main .admin-login a {
   text-decoration: none;
   color: rgb(45, 151, 238);
+  cursor: pointer;
 }
 
 #login-main .login-error-msg {
   color: #EC3E3E;
+}
+
+#login-main .flecha-atras {
+  position: absolute;
+  left: 18px;
+  top: 20px;
+}
+
+#login-main .flecha-atras i {
+  color: rgb(42, 187, 107);
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: 0.15s;
+  max-height: 100px;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  max-height: 0px;
 }
 
 </style>
