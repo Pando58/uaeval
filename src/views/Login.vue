@@ -244,7 +244,6 @@ export default {
 
 #login-main .mensaje-password a {
   color: rgb(31, 180, 106);
-  cursor: pointer;
 }
 
 #login-main .admin-login i {
@@ -256,7 +255,6 @@ export default {
 #login-main .admin-login a {
   text-decoration: none;
   color: rgb(45, 151, 238);
-  cursor: pointer;
 }
 
 #login-main .login-error-msg {

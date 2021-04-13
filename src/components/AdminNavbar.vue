@@ -8,6 +8,12 @@
     </div>
     <div class="seccion usuario">
       <span>Nombre de Usuario</span>
+      <div class="dropdown">
+        <i class="far fa-caret-square-down"></i>
+        <div class="dropdown-content">
+          <a @click="cerrarSesion()">Cerrar sesión</a>
+        </div>
+      </div>
     </div>
   </nav>
 </template>
@@ -23,6 +29,11 @@ export default {
   computed: {
     getAnchoSidebar() {
       return `width: ${ this.anchoSidebar }px;`;
+    }
+  },
+  methods: {
+    cerrarSesion() {
+      this.$router.push('/');
     }
   }
 }
@@ -43,8 +54,7 @@ export default {
 
 #admin-navbar .seccion:not(#admin-navbar .logo) {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  align-items: center;
   padding: 8px;
 }
 
@@ -60,10 +70,47 @@ export default {
   margin-right: 10px;
 }
 
-#admin-navbar .seccion span {
+#admin-navbar .seccion span,
+#admin-navbar .seccion.usuario i {
   color: #FFF;
   font-size: 1.1rem;
   text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+#admin-navbar .seccion.usuario i {
+  cursor: pointer;
+  margin-left: 12px;
+}
+
+#admin-navbar .dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+#admin-navbar .dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  padding: 12px;
+  background: #F1F1F1;
+  min-width: 140px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#admin-navbar .dropdown-content a {
+  transition: 0.15s;
+}
+
+#admin-navbar .dropdown-content a:hover {
+  color: rgb(25, 155, 79);
+}
+
+#admin-navbar .dropdown:hover .dropdown-content {
+  display: block;
+}
+
+#admin-navbar .dropdown:hover i {
+  color: #CCC;
 }
 
 </style>
