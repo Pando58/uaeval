@@ -273,14 +273,4 @@ export default {
   cursor: pointer;
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: 0.15s;
-  max-height: 100px;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
-  max-height: 0px;
-}
-
 </style>

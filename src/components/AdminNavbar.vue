@@ -48,8 +48,9 @@ export default {
   width: 100%;
   height: 70px;
   background: rgb(25, 155, 79);
-  box-shadow: 0px -6px 6px 6px rgba(0, 0, 0, 0.7);
+  box-shadow: 0px -8px 12px 6px rgba(0, 0, 0, 0.5);
   font-family: Poppins, sans-serif;
+  z-index: 10;
 }
 
 #admin-navbar .seccion:not(#admin-navbar .logo) {
@@ -107,6 +108,10 @@ export default {
 
 #admin-navbar .dropdown:hover .dropdown-content {
   display: block;
+}
+
+#admin-navbar .dropdown i {
+  transition: 0.25s;
 }
 
 #admin-navbar .dropdown:hover i {

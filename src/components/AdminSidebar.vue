@@ -24,20 +24,20 @@ export default {
   data() {
     return {
       datosMenu: [
-        { nombre: 'General', tipo: 'titulo' },
-        { id: 0, nombre: 'Estadísticas', tipo: 'entrada', icono: 'far fa-chart-bar' },
+        { nombre: 'General', vista: 'general', tipo: 'titulo' },
+        { id: 0, nombre: 'Estadísticas', vista: 'estadisticas', tipo: 'entrada', icono: 'far fa-chart-bar' },
 
         { nombre: 'Usuarios', tipo: 'titulo' },
-        { id: 1, nombre: 'Alumnos', tipo: 'entrada', icono: 'fas fa-user-friends' },
-        { id: 2, nombre: 'Grupos', tipo: 'entrada', icono: 'fas fa-chalkboard-teacher' },
-        { id: 3, nombre: 'Docentes', tipo: 'entrada', icono: 'fas fa-user-tie' },
+        { id: 1, nombre: 'Alumnos', vista: 'alumnos', tipo: 'entrada', icono: 'fas fa-user-friends' },
+        { id: 2, nombre: 'Grupos', vista: 'grupos', tipo: 'entrada', icono: 'fas fa-chalkboard-teacher' },
+        { id: 3, nombre: 'Docentes', vista: 'docentes', tipo: 'entrada', icono: 'fas fa-user-tie' },
 
         { nombre: 'Cuestionario', tipo: 'titulo' },
-        { id: 4, nombre: 'Reactivos', tipo: 'entrada', icono: 'far fa-question-circle' },
-        { id: 5, nombre: 'Categorias', tipo: 'entrada', icono: 'fas fa-tag' },
+        { id: 4, nombre: 'Reactivos', vista: 'reactivos', tipo: 'entrada', icono: 'far fa-question-circle' },
+        { id: 5, nombre: 'Categorias', vista: 'categorias', tipo: 'entrada', icono: 'fas fa-tag' },
 
         { nombre: 'Sistema', tipo: 'titulo' },
-        { id: 6, nombre: 'Administradores', tipo: 'entrada', icono: 'fas fa-users-cog' }
+        { id: 6, nombre: 'Administradores', vista: 'administradores', tipo: 'entrada', icono: 'fas fa-users-cog' }
       ],
       seleccionado: 0
     };
@@ -50,6 +50,7 @@ export default {
   methods: {
     seleccionarMenu(d) {
       if (d.tipo == 'entrada') {
+        this.$emit('seleccionarVista', d.vista);
         this.seleccionado = d.id;
       }
     }
@@ -64,6 +65,7 @@ export default {
   height: 100%;
   background: #313A46;
   font-family: Poppins, sans-serif;
+  box-shadow: -8px 0px 12px 6px rgba(0, 0, 0, 0.5);
 }
 
 #admin-sidebar .titulo {
