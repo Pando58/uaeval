@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import PanelAdmin from '../views/PanelAdmin.vue'
 import Cuestionario from '../views/Cuestionario.vue'
+import NotFound from '../views/404.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,10 @@ const routes = [
     path: '/cuestionario',
     name: 'Cuestionario',
     component: Cuestionario
+  },
+  {
+    path: '*',
+    component: NotFound
   }
 ]
 

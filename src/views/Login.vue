@@ -1,29 +1,37 @@
 <template>
   <div id="login-main" class="bg1">
     <div class="login-container">      
-      <form class="form text-center" action="includes/login.inc.php" method="POST">
+      <!-- <form class="form text-center" action="includes/login.inc.php" method="POST"> -->
 
-        <img class="form_logo" src="images/aguila.png" alt="">
-        <h4 class="form_titulo">Evaluación Docente</h4>
-        <br>
+        <div>
+          <img class="logo" src="../assets/images/aguila.png" alt="">
+        </div>
+        <h4 class="titulo">Evaluación Docente</h4>
         
-        <p class="login-error-msg text-danger" v-if="true">
-          <i class="bi-exclamation-octagon-fill"></i>Aquí va el mensaje de error.
+        <p class="login-error-msg" v-if="true">
+          <i class="fas fa-exclamation-triangle"></i> Aquí va el mensaje de error.
         </p>
         
-        <div class="form-group">
-          <input type="text" class="form_input" name="mat" id="log-mat" placeholder=" " required>
-          <label for="log-mat" class="form_label">Matrícula</label>
+        <div class="form-grupo">
+          <input type="text" name="usuario" id="log-usuario" class="form-input" placeholder=" " required>
+          <label for="log-usuario" class="form-label">Matrícula</label>
         </div>
-        <div class="form-group">
-          <input type="password" class="form_input" name="password" id="log-pass" placeholder=" " required>
-          <label for="log-pass" class="form_label">Contraseña</label>
+        <div class="form-grupo">
+          <input type="password" name="password" id="log-password" class="form-input" placeholder=" " required>
+          <label for="log-password" class="form-label">Contraseña</label>
         </div>
         <input type="hidden" name="type" value="alumno">
-        <button type="submit" name="submit" class="form_button btn btn-primary">Ingresar</button>
-        <br><br><br>
-        <p class="admin-login"><a href="login?admin=1">Ingreso de personal administrativo<i class="bi-person-square"></i></a></p>
-      </form>
+
+        <br>
+
+        <div>
+          <button type="submit" name="submit" class="form-button">Ingresar</button>
+        </div>
+
+        <br><br>
+
+        <p class="admin-login"><a href="login?admin=1">Ingreso de personal administrativo<i class="far fa-id-card"></i></a></p>
+      <!-- </form> -->
     </div>
   </div>
 </template>
@@ -43,6 +51,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  font-family: Rubik, sans-serif;
 }
 
 #login-main.bg1 {
@@ -57,8 +66,9 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-align: center;
   width: 500px;
-  padding: 14px;
+  padding: 32px;
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.2);
   background: #FFF;
@@ -73,20 +83,30 @@ export default {
   #login-main .login-container {
     width: 100%;
     height: 100%;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
   }
 }
 
-#login-main .form {
+/* #login-main .form {
   padding: 24px;
+} */
+
+#login-main .titulo {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-top: 18px;
+  margin-bottom: 24px;
 }
 
-#login-main .form-group {
+#login-main .form-grupo {
   position: relative;
-  height: 42px;
-  margin: 24px 0px;
+  height: 38px;
+  margin: 12px 0px;
 }
 
-#login-main .form_input {
+#login-main .form-input {
   position: absolute;
   top: 0;
   left: 0;
@@ -100,70 +120,81 @@ export default {
   z-index: 1;
 }
 
-#login-main .form_input:focus {
+#login-main .form-input:focus {
   border-color: rgb(27, 184, 79);
   border-width: 2px;
   padding-left: 7px;
 }
 
-#login-main .form_input:focus + .form_label {
-  left: 6px;
-  top: -10px;
-  font-size: 12px;
-  color: rgb(27, 184, 79);
-}
-
-#login-main .form_input:not(:placeholder-shown):not(:focus) + .form_label {
-  left: 10px;
-  top: -10px;
-  font-size: 12px;
-}
-
-#login-main .form_label {
+#login-main .form-label {
   position: absolute;
   left: 5px;
   top: 10px;
   padding: 0 4px;
   background-color: #FFF;
   color: #757575;
-  font-size: 16px;
+  font-size: 1rem;
   transition: 0.2s;
   z-index: 10;
   cursor: text;
 }
 
-#login-main .form_button {
-  background-color: rgb(36, 163, 78);
+#login-main .form-input:focus + .form-label {
+  left: 6px;
+  top: -10px;
+  font-size: 12px;
+  color: rgb(27, 184, 79);
+}
+
+#login-main .form-input:not(:placeholder-shown):not(:focus) + .form-label {
+  left: 10px;
+  top: -10px;
+  font-size: 12px;
+}
+
+#login-main .form-button {
+  font-family: Rubik, sans-serif;
+  color: #FFF;
+  font-size: 1rem;
+  padding: 8px;
+  background-color: rgb(33, 180, 106);
   border: 0;
+  border-radius: 7px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+  outline: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
-#login-main .form_button:hover {
-  background-color: rgb(33, 180, 82)
+#login-main .form-button:hover {
+  background-color: rgb(34, 194, 114);
 }
 
-#login-main .form_logo {
-  height: 96px;
-  margin-bottom: 20px;
+#login-main .form-button:active {
+  background-color: rgb(31, 180, 106);
 }
 
-#login-main .admin-login {
+#login-main .logo {
+  height: 120px;
+}
+
+/* #login-main .admin-login {
   text-align: right;
-}
+} */
 
 #login-main .admin-login i {
-  display: inline-block;
-  transform: translateY(-1px);
   font-size: 22px;
   margin-left: 8px;
+  transform: translateY(15%);
 }
 
 #login-main .admin-login a {
   text-decoration: none;
+  color: rgb(45, 151, 238);
 }
 
-#login-main .login-error-msg i {
-  display: inline-block;
-  transform: translateY(-2px);
+#login-main .login-error-msg {
+  color: #EC3E3E;
 }
 
 </style>

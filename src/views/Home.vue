@@ -1,7 +1,5 @@
 <template>
-  <div class="home">
-    <button @click="test()">a</button>
-  </div>
+  <h1>Cargando...</h1>
 </template>
 
 <script>
