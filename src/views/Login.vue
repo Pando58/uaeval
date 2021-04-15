@@ -1,7 +1,7 @@
 <template>
   <div id="login-main" class="bg1">
     <div class="login-container" :class="estiloLogin().marco">      
-        <transition name="fade">
+        <transition name="fadeResize">
           <div class='flecha-atras' v-if="loginAdmin" @click="switchLoginAdmin()">
             <i class="fas fa-arrow-left"></i>
           </div>
@@ -12,11 +12,11 @@
         </div>
         <h4 class="titulo">Evaluación Docente</h4>
 
-        <transition name="fade">
+        <transition name="fadeResize">
           <h6 class="subtitulo" v-if="loginAdmin">Ingreso de personal administrativo</h6>
         </transition>
 
-        <transition name="fade">
+        <transition name="fadeResize">
           <p class="login-error-msg" v-if="errorLogin">
             <i class="fas fa-exclamation-triangle"></i> {{ errorLogin }}
           </p>
@@ -40,7 +40,7 @@
 
         <br>
 
-        <transition name="fade">
+        <transition name="fadeResize">
         <p class="mensaje-password" v-if="!loginAdmin">
           <a>
             ¿Aún no tienes contraseña?
@@ -50,7 +50,7 @@
 
         <br>
 
-        <transition name="fade">
+        <transition name="fadeResize">
         <p class="admin-login" v-if="!loginAdmin">
           <a @click="switchLoginAdmin()">
             Ingreso de personal administrativo<i class="far fa-id-card"></i>

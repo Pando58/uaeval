@@ -19,9 +19,122 @@ a {
 .fade-enter-active,
 .fade-leave-active {
   transition: 0.15s;
-  max-height: 100px;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+
+.fadeResize-enter-active,
+.fadeResize-leave-active {
+  transition: 0.15s;
+  max-height: 100px;
+}
+.fadeResize-enter, .fadeResize-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
   max-height: 0px;
+}
+
+/* CLASES DE AYUDA */
+
+.d-flex {
+  display: flex;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+.f-right {
+  float: right;
+}
+
+
+.texto-verde {
+  color: rgb(22, 160, 68);
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+
+.material-btn {
+  background: #EEE;
+  border-radius: 5px;
+  border: none;
+  padding: 6px;
+  color: #222;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+  outline: none;
+  cursor: pointer;
+}
+
+.material-btn:hover {
+  background: #FFF;
+}
+
+.material-btn:active {
+  background: #DDD;
+}
+
+.material-btn.rounded {
+  border-radius: 100vw;
+}
+
+.material-btn.verde {
+  color: #FFF;
+  background: rgb(43, 189, 74);
+  transition: background-color 0.15s;
+}
+
+.material-btn.verde:hover {
+  background: rgb(52, 207, 86);
+}
+
+.material-btn.verde:active {
+  background: rgb(37, 177, 68);
+}
+
+.material-btn.icono {
+  border-radius: 50%;
+  padding: 9px 7px 8px 8px;
+}
+
+.tarjeta {
+  padding: 10px;
+  background: #FFF;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 7px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.tabla {
+  border-collapse: collapse;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.tabla td,
+.tabla th {
+  padding: 8px;
+}
+
+.tabla.rayada tr:nth-child(even) {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.tabla td.rellenar,
+.tabla th.rellenar {
+  width: 99%;
 }

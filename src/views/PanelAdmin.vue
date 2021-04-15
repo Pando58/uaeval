@@ -4,7 +4,7 @@
     <div id="debajoNavbar">
       <AdminSidebar :ancho="anchoSidebar" @seleccionarVista="cambiarVista"/>
       <div id="contenedorPagina">
-        <transition name="fade">
+        <transition name="fade" mode="out-in">
           <AdminEstadisticas v-if="vista == 'estadisticas'"/>
           
           <AdminAlumnos v-if="vista == 'alumnos'"/>
