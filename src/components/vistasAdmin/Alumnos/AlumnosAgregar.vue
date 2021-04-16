@@ -7,16 +7,13 @@
       <div class="text-center">
         <h4>Agregar alumno</h4>
       </div>
-      <div class="d-flex">
-        <input type="text" class="flex-grow-1" placeholder="Nombre(s)">
+      <div class="nombre">
+        <input type="text" placeholder="Nombre(s)">
+        <input type="text" placeholder="Apellido Paterno">
+        <input type="text" placeholder="Apellido Materno">
       </div>
       <div class="d-flex">
-        <input type="text" class="flex-grow-1" placeholder="Apellido Paterno">
-        <input type="text" class="flex-grow-1" placeholder="Apellido Materno">
-      </div>
-      <br>
-      <div class="d-flex">
-        <input type="text" class="flex-grow-1" placeholder="Usuario">
+        <input type="text" class="flex-grow-1" placeholder="Matrícula">
         <input type="text" class="flex-grow-1" placeholder="Contraseña">
       </div>
       <div class="f-right">
@@ -40,8 +37,14 @@ export default {
   font-family: Roboto, sans-serif;
 }
 
+.nombre {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+}
+
 input {
   margin: 6px;
+  min-width: 0;
   padding: 6px;
   font-size: 0.9rem;
   border: 1px solid #CCC;
@@ -59,8 +62,7 @@ button {
   font-family: Roboto, sans-serif;
   font-weight: 500;
   font-size: 0.9rem;
-  margin-top: 6px;
-  margin-right: 6px;
+  margin: 10px 6px 4px 0;
 }
 
 h4 {

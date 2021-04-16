@@ -6,21 +6,19 @@
     <div class="contenido">
       <div class="text-center">
         <h4>Agregar usuario administrador</h4>
+        <span class="msg-error" v-if="error">{{ error }}</span>
+      </div>
+      <div class="nombre">
+        <input type="text" placeholder="Nombre(s)" v-model="nombre">
+        <input type="text" placeholder="*Apellido Paterno" v-model="apellido_p">
+        <input type="text" placeholder="*Apellido Materno" v-model="apellido_m">
       </div>
       <div class="d-flex">
-        <input type="text" class="flex-grow-1" placeholder="Nombre(s)">
-      </div>
-      <div class="d-flex">
-        <input type="text" class="flex-grow-1" placeholder="Apellido Paterno">
-        <input type="text" class="flex-grow-1" placeholder="Apellido Materno">
-      </div>
-      <br>
-      <div class="d-flex">
-        <input type="text" class="flex-grow-1" placeholder="Usuario">
-        <input type="text" class="flex-grow-1" placeholder="Contraseña">
+        <input type="text" class="flex-grow-1" placeholder="Usuario" v-model="usuario">
+        <input type="text" class="flex-grow-1" placeholder="Contraseña" v-model="password">
       </div>
       <div class="f-right">
-        <button class="material-btn verde">Agregar</button>
+        <button class="material-btn verde" @click="enviar">Agregar</button>
       </div>
     </div>
   </div>
@@ -28,8 +26,42 @@
 
 <script>
 
+import api from '../../../api';
+
 export default {
-  name: 'AdminsAgregar'
+  name: 'AdminsAgregar',
+  data: () => ({
+    nombre: '',
+    apellido_p: '',
+    apellido_m: '',
+    usuario: '',
+    password: '',
+    error: null
+  }),
+  methods: {
+    enviar: function() {
+      api.post('/administradores.php', {
+        accion: 'agregar',
+        datos: {
+          nombre: this.nombre,
+          apellido_p: this.apellido_p,
+          apellido_m: this.apellido_m,
+          usuario: this.usuario,
+          password: this.password
+        }
+      }).then(res => {
+        const data = res.data;
+
+        if (data.estado != 'ok') {
+          if (data.err_id == 1) {
+            this.error = 'Completa los campos requeridos';
+          }
+        } else {
+          this.error = null;
+        }
+      });
+    }
+  }
 }
 
 </script>
@@ -40,8 +72,15 @@ export default {
   font-family: Roboto, sans-serif;
 }
 
+.nombre {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  margin-top: 8px;
+}
+
 input {
   margin: 6px;
+  min-width: 0;
   padding: 6px;
   font-size: 0.9rem;
   border: 1px solid #CCC;
@@ -58,13 +97,16 @@ button {
   font-family: Roboto, sans-serif;
   font-weight: 500;
   font-size: 0.9rem;
-  margin-top: 6px;
-  margin-right: 6px;
+  margin: 10px 6px 4px 0;
 }
 
 h4 {
   margin: 0 0 12px 0;
   color: #444;
+}
+
+.msg-error {
+  color: #F44;
 }
 
 </style>
