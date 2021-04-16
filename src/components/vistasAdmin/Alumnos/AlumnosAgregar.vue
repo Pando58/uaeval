@@ -1,12 +1,20 @@
 <template>
   <div class="d-flex flex-col">
     <div class="cabeza">
-      <i class="fas fa-arrow-left pointer" style="color: #AAA" @click="$emit('irTablaUsuarios')"></i>
+      <i class="fas fa-arrow-left pointer" style="color: #AAA" @click="$emit('irTablaAlumnos')"></i>
     </div>
     <div class="contenido">
-      <div class="d-flex">
-        <input type="text" class="flex-grow-1" placeholder="Nombre">
+      <div class="text-center">
+        <h4>Agregar alumno</h4>
       </div>
+      <div class="d-flex">
+        <input type="text" class="flex-grow-1" placeholder="Nombre(s)">
+      </div>
+      <div class="d-flex">
+        <input type="text" class="flex-grow-1" placeholder="Apellido Paterno">
+        <input type="text" class="flex-grow-1" placeholder="Apellido Materno">
+      </div>
+      <br>
       <div class="d-flex">
         <input type="text" class="flex-grow-1" placeholder="Usuario">
         <input type="text" class="flex-grow-1" placeholder="Contraseña">
@@ -28,15 +36,19 @@ export default {
 
 <style scoped>
 
+.contenido {
+  font-family: Roboto, sans-serif;
+}
+
 input {
   margin: 6px;
   padding: 6px;
-  font-family: Roboto, sans-serif;
   font-size: 0.9rem;
   border: 1px solid #CCC;
   border-radius: 4px;
   outline: none;
   transition: border-color 0.1s;
+  /* min-width: 1px; */
 }
 
 input:focus {
@@ -49,6 +61,11 @@ button {
   font-size: 0.9rem;
   margin-top: 6px;
   margin-right: 6px;
+}
+
+h4 {
+  margin: 0 0 12px 0;
+  color: #444;
 }
 
 </style>

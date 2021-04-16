@@ -4,6 +4,7 @@
     <div id="debajoNavbar">
       <AdminSidebar :ancho="anchoSidebar" @seleccionarVista="cambiarVista"/>
       <div id="contenedorPagina">
+        <h3 class="tituloVista">{{ vista }}</h3>
         <transition name="fade" mode="out-in">
           <AdminEstadisticas v-if="vista == 'estadisticas'"/>
           
@@ -81,6 +82,15 @@ export default {
   flex-grow: 1;
   max-height: 100%;
   overflow: auto;
+}
+
+#contenedorPagina .tituloVista {
+  font-family: Poppins, sans-serif;
+  text-transform: uppercase;
+  font-size: 1rem;
+  letter-spacing: 0.06rem;
+  margin: 0 0 12px 0;
+  color: #313A46;
 }
 
 </style>

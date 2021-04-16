@@ -56,8 +56,16 @@ a {
   flex-grow: 1;
 }
 
+.flex-grow-2 {
+  flex-grow: 2;
+}
+
 .f-right {
   float: right;
+}
+
+.text-center {
+  text-align: center;
 }
 
 

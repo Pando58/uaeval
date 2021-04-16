@@ -1,7 +1,7 @@
 <template>
   <div id="admin-administradores">
     <div class="d-flex justify-center">
-      <div id="tarjeta-admins" class="tarjeta">
+      <div class="tarjeta-admins tarjeta">
         <transition name="fade" mode="out-in">
           <AdminsTablaUsuarios v-if="!vistaAgregarUsuario" @irAgregarUsuario="irAgregarUsuario"/>
           <AdminsAgregar v-else @irTablaUsuarios="irTablaUsuarios"/>
@@ -12,8 +12,9 @@
 </template>
 
 <script>
-import AdminsTablaUsuarios from '../AdminsTablaUsuarios'
-import AdminsAgregar from '../AdminsAgregar'
+
+import AdminsTablaUsuarios from './Administradores/AdminsTablaUsuarios'
+import AdminsAgregar from './Administradores/AdminsAgregar'
 
 export default {  
   name: 'AdminAdministradores',
@@ -43,11 +44,11 @@ export default {
   font-family: Roboto, sans-serif;
 }
 
-#tarjeta-admins {
-  width: 500px;
+#admin-administradores .tarjeta-admins {
+  width: 600px;
 }
 
-#tarjeta-admins .contenido {
+#admin-administradores .tarjeta-admins .contenido {
   margin-top: 10px;
 }
 
