@@ -68,6 +68,14 @@ a {
   text-align: center;
 }
 
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
 
 .texto-verde {
   color: rgb(22, 160, 68);
@@ -138,6 +146,10 @@ a {
   padding: 8px;
 }
 
+.tabla th {
+  font-weight: 500;
+}
+
 .tabla.rayada tr:nth-child(even) {
   background: rgba(0, 0, 0, 0.05);
 }
@@ -145,4 +157,15 @@ a {
 .tabla td.rellenar,
 .tabla th.rellenar {
   width: 99%;
+}
+
+.tabla.verde th {
+  background: rgb(30, 180, 92);
+  color: #FFF;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tabla th:not(:last-child),
+.tabla td:not(:last-child) {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
 }

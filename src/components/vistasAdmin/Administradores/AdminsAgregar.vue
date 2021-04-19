@@ -17,6 +17,16 @@
         <input type="text" class="flex-grow-1" placeholder="Usuario" v-model="usuario">
         <input type="text" class="flex-grow-1" placeholder="Contraseña" v-model="password">
       </div>
+      <br>
+      <span class="etiqueta" style="margin: 6px">Permisos:</span>
+      <div style="padding: 6px">
+        <label class="container">Uno
+          <input type="checkbox">
+        </label>
+        <label class="container">Dos
+          <input type="checkbox">
+        </label>
+      </div>
       <div class="f-right">
         <button class="material-btn verde" @click="enviar">Agregar</button>
       </div>
@@ -78,7 +88,8 @@ export default {
   margin-top: 8px;
 }
 
-input {
+input,
+select {
   margin: 6px;
   min-width: 0;
   padding: 6px;
@@ -89,8 +100,15 @@ input {
   transition: border-color 0.1s;
 }
 
-input:focus {
+input:focus,
+select:focus {
   border-color: rgb(43, 189, 74);
+}¨
+
+.etiqueta {
+  margin-left: 8px;
+  font-size: 0.9rem;
+  color: #777;
 }
 
 button {

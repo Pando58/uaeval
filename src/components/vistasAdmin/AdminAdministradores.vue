@@ -3,7 +3,7 @@
     <div class="d-flex justify-center">
       <div class="tarjeta-admins tarjeta">
         <transition name="fade" mode="out-in">
-          <AdminsTablaUsuarios v-if="!vistaAgregarUsuario" @irAgregarUsuario="irAgregarUsuario"/>
+          <AdminsTabla v-if="!vistaAgregarUsuario" @irAgregarUsuario="irAgregarUsuario"/>
           <AdminsAgregar v-else @irTablaUsuarios="irTablaUsuarios"/>
         </transition>
       </div>
@@ -13,13 +13,13 @@
 
 <script>
 
-import AdminsTablaUsuarios from './Administradores/AdminsTablaUsuarios'
+import AdminsTabla from './Administradores/AdminsTabla'
 import AdminsAgregar from './Administradores/AdminsAgregar'
 
 export default {  
   name: 'AdminAdministradores',
   components: {
-    AdminsTablaUsuarios,
+    AdminsTabla,
     AdminsAgregar
   },
   data: () => ({

@@ -9,12 +9,19 @@
       </div>
       <div class="nombre">
         <input type="text" placeholder="Nombre(s)">
-        <input type="text" placeholder="Apellido Paterno">
-        <input type="text" placeholder="Apellido Materno">
+        <input type="text" placeholder="*Apellido Paterno">
+        <input type="text" placeholder="*Apellido Materno">
       </div>
-      <div class="d-flex">
-        <input type="text" class="flex-grow-1" placeholder="Matrícula">
-        <input type="text" class="flex-grow-1" placeholder="Contraseña">
+      <div class="d-flex align-center">
+        <input type="text" class="flex-grow-2" placeholder="Matrícula">
+        <span class="etiqueta">Grupo:</span>
+        <select class="flex-grow-1">
+          <option value="volvo">Volvo</option>
+          <option value="saab">Saab</option>
+          <option value="opel">Opel</option>
+          <option value="audi">Audi</option>
+        </select>
+        <!-- <input type="text" class="flex-grow-1" placeholder="Grupo"> -->
       </div>
       <div class="f-right">
         <button class="material-btn verde">Agregar</button>
@@ -26,7 +33,7 @@
 <script>
 
 export default {
-  name: 'AdminsAgregar'
+  name: 'AlumnosAgregar'
 }
 
 </script>
@@ -42,7 +49,8 @@ export default {
   grid-template-columns: 2fr 1fr 1fr;
 }
 
-input {
+input,
+select {
   margin: 6px;
   min-width: 0;
   padding: 6px;
@@ -51,11 +59,17 @@ input {
   border-radius: 4px;
   outline: none;
   transition: border-color 0.1s;
-  /* min-width: 1px; */
 }
 
-input:focus {
+input:focus,
+select:focus {
   border-color: rgb(43, 189, 74);
+}
+
+.etiqueta {
+  margin-left: 8px;
+  font-size: 0.9rem;
+  color: #777;
 }
 
 button {

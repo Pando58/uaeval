@@ -9,7 +9,7 @@
     <div class="seccion usuario">
       <span>Nombre de Usuario</span>
       <div class="dropdown">
-        <i class="far fa-caret-square-down"></i>
+        <i class="fas fa-chevron-down"></i>
         <div class="dropdown-content">
           <a @click="cerrarSesion()">Cerrar sesión</a>
         </div>
@@ -71,16 +71,14 @@ export default {
   margin-right: 10px;
 }
 
+#admin-navbar .seccion span {
+  font-size: 1.1rem;
+}
+
 #admin-navbar .seccion span,
 #admin-navbar .seccion.usuario i {
   color: #FFF;
-  font-size: 1.1rem;
   text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
-}
-
-#admin-navbar .seccion.usuario i {
-  cursor: pointer;
-  margin-left: 12px;
 }
 
 #admin-navbar .dropdown {
@@ -112,10 +110,14 @@ export default {
 
 #admin-navbar .dropdown i {
   transition: 0.25s;
+  cursor: pointer;
+  margin-left: 12px;
+  font-size: 1rem;
 }
 
 #admin-navbar .dropdown:hover i {
-  color: #CCC;
+  transform: rotate(180deg);
+  text-shadow: 0px -2px 3px rgba(0, 0, 0, 0.2);
 }
 
 </style>

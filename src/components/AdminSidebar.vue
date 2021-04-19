@@ -65,6 +65,7 @@ export default {
   height: 100%;
   background: #313A46;
   font-family: Poppins, sans-serif;
+  overflow: auto;
   box-shadow: -8px 0px 12px 6px rgba(0, 0, 0, 0.5);
 }
 
