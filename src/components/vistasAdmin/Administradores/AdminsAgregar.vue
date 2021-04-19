@@ -19,12 +19,10 @@
       </div>
       <br>
       <span class="etiqueta" style="margin: 6px">Permisos:</span>
-      <div style="padding: 6px">
-        <label class="container">Uno
-          <input type="checkbox">
-        </label>
-        <label class="container">Dos
-          <input type="checkbox">
+      <div class="permisos d-flex flex-col">
+        <label v-for="(perm, i) in lista_permisos" :key="i">
+          <input type="checkbox" v-model="permisos[perm.campo]">
+          {{ perm.titulo }}
         </label>
       </div>
       <div class="f-right">
@@ -46,7 +44,41 @@ export default {
     apellido_m: '',
     usuario: '',
     password: '',
-    error: null
+    permisos: {
+      alumnos_editar: false,
+      administradores_editar: false,
+      grupos_editar: false,
+      docentes_editar: false,
+      categorias_editar: false,
+      reactivos_editar: false
+    },
+    lista_permisos: [
+      {
+        titulo: 'Editar alumnos',
+        campo: 'alumnos_editar'
+      },
+      {
+        titulo: 'Editar administradores',
+        campo: 'administradores_editar'
+      },
+      {
+        titulo: 'Editar grupos',
+        campo: 'grupos_editar'
+      },
+      {
+        titulo: 'Editar docentes',
+        campo: 'docentes_editar'
+      },
+      {
+        titulo: 'Editar categorías',
+        campo: 'categorias_editar'
+      },
+      {
+        titulo: 'Editar reactivos',
+        campo: 'reactivos_editar'
+      }
+    ],
+    error: null,
   }),
   methods: {
     enviar: function() {
@@ -57,10 +89,12 @@ export default {
           apellido_p: this.apellido_p,
           apellido_m: this.apellido_m,
           usuario: this.usuario,
-          password: this.password
+          password: this.password,
+          permisos: this.permisos
         }
       }).then(res => {
         const data = res.data;
+        console.log(res);
 
         if (data.estado != 'ok') {
           if (data.err_id == 1) {
@@ -69,7 +103,7 @@ export default {
         } else {
           this.error = null;
         }
-      });
+      }).catch(err => console.log(err));
     }
   }
 }
@@ -125,6 +159,16 @@ h4 {
 
 .msg-error {
   color: #F44;
+}
+
+.permisos {
+  padding: 6px;
+}
+
+.permisos label {
+  /* border: 1px solid #CCC; */
+  margin: 6px;
+  padding: 4px;
 }
 
 </style>
