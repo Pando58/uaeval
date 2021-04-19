@@ -87,11 +87,15 @@ export default {
       return !this.loginAdmin ? 'Matrícula' : 'Usuario'
     },
     submit() {
-      if (!this.usuario || !this.password) {
+      this.$store.dispatch('login', { usuario: this.usuario, password: this.password }).then(() => {
+        this.$router.push('/panel_admin');
+      });
+      
+      /* if (!this.usuario || !this.password) {
         this.errorLogin = 'Completa todos los campos';
       } else {
         this.errorLogin = null;
-      }
+      } */
     }
   }
 }
