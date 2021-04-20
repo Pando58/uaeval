@@ -63,14 +63,16 @@
 
 <script>
 
+import api from '../api'
+
 export default {
   name: 'Login',
   data() {
     return {
       loginAdmin: false,
       errorLogin: null,
-      usuario: null,
-      password: null
+      usuario: '',
+      password: ''
     };
   },
   methods: {
@@ -87,9 +89,16 @@ export default {
       return !this.loginAdmin ? 'Matrícula' : 'Usuario'
     },
     submit() {
-      this.$store.dispatch('login', { usuario: this.usuario, password: this.password }).then(() => {
-        this.$router.push('/panel_admin');
+      api.post('/login', {
+        usuario: this.usuario,
+        password: this.password
+      }).then(res => {
+        console.log(res);
       });
+      
+      /* this.$store.dispatch('login', { usuario: this.usuario, password: this.password }).then(() => {
+        this.$router.push('/panel_admin');
+      }); */
       
       /* if (!this.usuario || !this.password) {
         this.errorLogin = 'Completa todos los campos';
