@@ -91,14 +91,23 @@ export default {
     submit() {
       api.post('/login', {
         usuario: this.usuario,
-        password: this.password
+        password: this.password,
+        admin: this.loginAdmin
       }).then(res => {
-        console.log(res);
+        if (res.data.status == 'error') {
+          if (res.data.err_id == 1) {
+            this.errorLogin = 'Completa todos los campos';
+          } else if (res.data.err_id == 2) {
+            this.errorLogin = 'El usuario ingresado no existe';
+          } else if (res.data.err_id == 3 || res.data.err_id == 4) {
+            this.errorLogin = 'Los datos de ingreso son incorrectos';
+          }
+        } else {
+          this.$store.dispatch('login', { usuario: this.usuario, password: this.password }).then(() => {
+            this.$router.push('/panel_admin');
+          });
+        }
       });
-      
-      /* this.$store.dispatch('login', { usuario: this.usuario, password: this.password }).then(() => {
-        this.$router.push('/panel_admin');
-      }); */
       
       /* if (!this.usuario || !this.password) {
         this.errorLogin = 'Completa todos los campos';
