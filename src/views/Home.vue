@@ -5,16 +5,31 @@
 <script>
 
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import api from '../plugins/api';
 
 export default {
   name: 'Home',
-  components: {
-    HelloWorld
-  },
   mounted() {
-    this.$router.replace({ name: 'Login' });
+    const token = this.$store.state.token;
+
+    console.log(token);
+
+    if (!token) {
+      this.$router.replace({ name: 'Login' });
+    } else {
+      api.post('/auth', {}, {
+        // headers: {
+        //   'Authorization': `Bearer ${token}`
+        // }
+      })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    }
   }
-}
+};
 
 </script>

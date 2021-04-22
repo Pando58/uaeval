@@ -103,17 +103,14 @@ export default {
             this.errorLogin = 'Los datos de ingreso son incorrectos';
           }
         } else {
-          this.$store.dispatch('login', { usuario: this.usuario, password: this.password }).then(() => {
-            this.$router.push('/panel_admin');
-          });
+          this.$store.state.token = res.data.data.token;
+          this.$router.push('/');
         }
       });
-      
-      /* if (!this.usuario || !this.password) {
-        this.errorLogin = 'Completa todos los campos';
-      } else {
-        this.errorLogin = null;
-      } */
+
+      /* this.$store.dispatch('login', { usuario: this.usuario, password: this.password }).then(() => {
+        this.$router.push('/panel_admin');
+      }); */
     }
   }
 }
