@@ -13,7 +13,9 @@ export default new Vuex.Store({
     user : {}
   },
   mutations: {
-
+    'login': () => {
+      console.log('mutation login');
+    }
   },
   actions: {
     'login': ({ commit, dispatch }, user) => {
