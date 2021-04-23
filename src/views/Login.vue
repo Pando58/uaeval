@@ -110,6 +110,11 @@ export default {
         this.$router.push('/panel_admin');
       }); */
     }
+  },
+  created() {
+    if (this.$store.state.token) {
+      this.$router.push({ name: 'Home' });
+    }
   }
 }
 

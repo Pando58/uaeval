@@ -1,5 +1,7 @@
 <template>
-  <h1>Cargando...</h1>
+  <div id="Home">
+    <h1>Cargando...</h1>
+  </div>
 </template>
 
 <script>
@@ -28,10 +30,29 @@ export default {
         }
       })
       .catch(err => {
-        console.log(err.response);
+        // console.log(err.response);
+        this.$router.replace({ name: 'Login' });
       });
     }
   }
 };
 
 </script>
+
+<style scoped>
+
+#Home {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font-family: Rubik, sans-serif;
+  font-size: 4rem;
+  color: #AAA;
+}
+
+</style>

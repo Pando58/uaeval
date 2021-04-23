@@ -24,6 +24,8 @@
 
 <script>
 
+import api from '../plugins/api'
+
 import AdminNavbar from '@/components/AdminNavbar.vue'
 import AdminSidebar from '@/components/AdminSidebar.vue'
 import AdminEstadisticas from '../components/vistasAdmin/AdminEstadisticas.vue'
@@ -57,6 +59,23 @@ export default {
     cambiarVista(vista) {
       this.vista = vista;
     }
+  },
+  created() {
+    const token = this.$store.state.token;
+
+    api.post('/auth', {}, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(res => {
+      if (!parseInt(res.data.data.admin)) {
+        this.$router.replace({ name: 'Home' });
+      }
+    })
+    .catch(err => {
+      this.$router.push({ name: 'Home' });
+    });
   }
 }
 
