@@ -93,19 +93,17 @@ export default {
         usuario: this.usuario,
         password: this.password,
         admin: this.loginAdmin
-      }).then(res => {
-        if (res.data.status == 'error') {
-          if (res.data.err_id == 1) {
-            this.errorLogin = 'Completa todos los campos';
-          } else if (res.data.err_id == 2) {
-            this.errorLogin = 'El usuario ingresado no existe';
-          } else if (res.data.err_id == 3 || res.data.err_id == 4) {
-            this.errorLogin = 'Los datos de ingreso son incorrectos';
-          }
-        } else {
-          this.$store.state.token = res.data.data.token;
-          this.$router.push('/');
-        }
+      })
+      .then(res => {
+        this.$store.state.token = res.data.token;
+        this.$router.push('/');
+      })
+      .catch(err => {
+        const code = err.response.data.code;
+
+        if (code == 1) this.errorLogin = 'Completa todos los campos';
+        if (code == 2) this.errorLogin = 'El usuario ingresado no existe';
+        if (code == 3 || code == 4) this.errorLogin = 'Los datos de ingreso son incorrectos';
       });
 
       /* this.$store.dispatch('login', { usuario: this.usuario, password: this.password }).then(() => {
