@@ -25,6 +25,7 @@
 <script>
 
 import api from '../plugins/api'
+import parseJWT from '../plugins/parseJWT'
 
 import AdminNavbar from '@/components/AdminNavbar.vue'
 import AdminSidebar from '@/components/AdminSidebar.vue'
@@ -63,19 +64,16 @@ export default {
   created() {
     const token = this.$store.state.token;
 
-    api.post('/auth', {}, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
-    .then(res => {
-      if (!parseInt(res.data.data.admin)) {
-        this.$router.replace('/');
-      }
-    })
-    .catch(err => {
-      this.$router.push('/');
-    });
+    if (!token) {
+      this.$router.replace('/');
+      return;
+    }
+
+    const payload = parseJWT(token);
+
+    if (!payload.data.admin) {
+      this.$router.replace('/');
+    }
   }
 }
 

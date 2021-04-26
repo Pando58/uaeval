@@ -1,6 +1,7 @@
 <template>
   <div id="Home">
     <h1>Cargando...</h1>
+    <p>{{test}}</p>
   </div>
 </template>
 
@@ -8,31 +9,26 @@
 
 // @ is an alias to /src
 import api from '../plugins/api';
+import parseJWT from '../plugins/parseJWT';
 
 export default {
   name: 'Home',
+  data: () => ({
+    test: ''
+  }),
   mounted() {
     const token = this.$store.state.token;
-
+    
     if (!token) {
       this.$router.replace('/login');
     } else {
-      api.post('/auth', {}, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-      .then(res => {
-        if (!!parseInt(res.data.data.admin)) {
-          this.$router.replace('/panel_admin');
-        } else {
-          this.$router.replace('/cuestionario');
-        }
-      })
-      .catch(err => {
-        // console.log(err.response);
-        this.$router.replace('/login');
-      });
+      const payload = parseJWT(token);
+      
+      if (payload.data.admin) {
+        this.$router.replace('/panel_admin');
+      } else {
+        this.$router.replace('/cuestionario');
+      }
     }
   }
 };

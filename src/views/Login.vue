@@ -92,7 +92,7 @@ export default {
       api.post('/login', {
         usuario: this.usuario,
         password: this.password,
-        admin: this.loginAdmin
+        admin: this.loginAdmin ? 1 : 0
       })
       .then(res => {
         this.$store.state.token = res.data.token;
