@@ -7,7 +7,7 @@
       <span>Panel de administración</span>
     </div>
     <div class="seccion usuario">
-      <span>Nombre de Usuario</span>
+      <span>{{ nombre }}</span>
       <div class="dropdown">
         <i class="fas fa-chevron-down"></i>
         <div class="dropdown-content">
@@ -23,7 +23,7 @@
 export default {
   name: 'AdminNavbar',
   props: {
-    usuario: String,
+    nombre: String,
     anchoSidebar: Number
   },
   computed: {
@@ -34,6 +34,7 @@ export default {
   methods: {
     cerrarSesion() {
       this.$store.state.token = '';
+      localStorage.setItem('token', '');
       this.$router.push('/');
     }
   }

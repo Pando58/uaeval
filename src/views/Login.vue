@@ -96,6 +96,7 @@ export default {
       })
       .then(res => {
         this.$store.state.token = res.data.token;
+        localStorage.setItem('token', res.data.token);
         this.$router.push('/');
       })
       .catch(err => {

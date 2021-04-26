@@ -1,6 +1,6 @@
 <template>
   <div id="admin-principal">
-    <AdminNavbar :anchoSidebar="anchoSidebar"/>
+    <AdminNavbar :anchoSidebar="anchoSidebar" :nombre="nombre"/>
     <div id="debajoNavbar">
       <AdminSidebar :ancho="anchoSidebar" @seleccionarVista="cambiarVista"/>
       <div id="contenedorPagina">
@@ -39,12 +39,11 @@ import AdminAdministradores from '../components/vistasAdmin/AdminAdministradores
 
 export default {
   name: 'PanelAdmin',
-  data() {
-    return {
-      anchoSidebar: 240,
-      vista: 'estadisticas'
-    }
-  },
+  data: () => ({
+    anchoSidebar: 240,
+    vista: 'estadisticas',
+    nombre: '',
+  }),
   components: {
     AdminNavbar,
     AdminSidebar,
@@ -74,6 +73,8 @@ export default {
     if (!payload.data.admin) {
       this.$router.replace('/');
     }
+
+    this.nombre = `${payload.data.nombres} ${payload.data.apellido_p} ${payload.data.apellido_m}`;
   }
 }
 
