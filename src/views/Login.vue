@@ -113,7 +113,7 @@ export default {
   },
   created() {
     if (this.$store.state.token) {
-      this.$router.push({ name: 'Home' });
+      this.$router.push('/');
     }
   }
 }

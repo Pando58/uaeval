@@ -70,11 +70,11 @@ export default {
     })
     .then(res => {
       if (!parseInt(res.data.data.admin)) {
-        this.$router.replace({ name: 'Home' });
+        this.$router.replace('/');
       }
     })
     .catch(err => {
-      this.$router.push({ name: 'Home' });
+      this.$router.push('/');
     });
   }
 }

@@ -15,7 +15,7 @@ export default {
     const token = this.$store.state.token;
 
     if (!token) {
-      this.$router.replace({ name: 'Login' });
+      this.$router.replace('/login');
     } else {
       api.post('/auth', {}, {
         headers: {
@@ -24,14 +24,14 @@ export default {
       })
       .then(res => {
         if (!!parseInt(res.data.data.admin)) {
-          this.$router.replace({ name: 'PanelAdmin' });
+          this.$router.replace('/panel_admin');
         } else {
-          this.$router.replace({ name: 'Cuestionario' });
+          this.$router.replace('/cuestionario');
         }
       })
       .catch(err => {
         // console.log(err.response);
-        this.$router.replace({ name: 'Login' });
+        this.$router.replace('/login');
       });
     }
   }

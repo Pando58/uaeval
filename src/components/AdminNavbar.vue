@@ -33,6 +33,7 @@ export default {
   },
   methods: {
     cerrarSesion() {
+      this.$store.state.token = '';
       this.$router.push('/');
     }
   }
