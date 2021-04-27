@@ -16,6 +16,9 @@ a {
   cursor: pointer;
 }
 
+
+
+/* TRANSICIONES DE VUE */
 .fade-enter-active,
 .fade-leave-active {
   transition: 0.15s;
@@ -23,6 +26,7 @@ a {
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
+
 
 .fadeResize-enter-active,
 .fadeResize-leave-active {
@@ -76,7 +80,6 @@ a {
   text-align: right;
 }
 
-
 .texto-verde {
   color: rgb(22, 160, 68);
 }
@@ -84,6 +87,7 @@ a {
 .pointer {
   cursor: pointer;
 }
+
 
 
 .material-btn {
@@ -128,6 +132,8 @@ a {
   padding: 9px 7px 8px 8px;
 }
 
+
+
 .tarjeta {
   padding: 10px;
   background: #FFF;
@@ -135,6 +141,8 @@ a {
   border-radius: 7px;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
+
+
 
 .tabla {
   border-collapse: collapse;
@@ -168,4 +176,45 @@ a {
 .tabla th:not(:last-child),
 .tabla td:not(:last-child) {
   border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+
+
+.tarjeta-form input,
+.tarjeta-form select {
+  margin: 6px;
+  min-width: 0;
+  padding: 6px;
+  font-size: 0.9rem;
+  border: 1px solid #CCC;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.1s;
+}
+
+.tarjeta-form input:focus,
+.tarjeta-form select:focus {
+  border-color: rgb(43, 189, 74);
+}
+
+.tarjeta-form .etiqueta {
+  margin-left: 8px;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.tarjeta-form button {
+  font-family: Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin: 10px 6px 4px 0;
+}
+
+.tarjeta-form h4 {
+  margin: 0 0 12px 0;
+  color: #444;
+}
+
+.tarjeta-form .msg-error {
+  color: #F44;
 }
