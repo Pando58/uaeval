@@ -9,8 +9,8 @@
       </div>
       <div class="nombre">
         <input type="text" placeholder="Nombre(s)">
-        <input type="text" placeholder="*Apellido Paterno">
-        <input type="text" placeholder="*Apellido Materno">
+        <input type="text" placeholder="Apellido Paterno">
+        <input type="text" placeholder="Apellido Materno">
       </div>
       <div class="d-flex align-center">
         <input type="text" class="flex-grow-2" placeholder="Matrícula">
