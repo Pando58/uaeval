@@ -1,10 +1,10 @@
 <template>
   <div id="admin-administradores">
     <div class="d-flex justify-center">
-      <div class="tarjeta-admins tarjeta">
+      <div class="tarjeta">
         <transition name="fade" mode="out-in">
-          <AdminsTabla v-if="!vistaAgregarUsuario" @irAgregarUsuario="irAgregarUsuario"/>
-          <AdminsAgregar v-else @irTablaUsuarios="irTablaUsuarios"/>
+          <AdminsTabla v-if="!vistaAgregar" @irAgregar="irAgregar"/>
+          <AdminsAgregar v-else @irTabla="irTabla"/>
         </transition>
       </div>
     </div>
@@ -23,15 +23,14 @@ export default {
     AdminsAgregar
   },
   data: () => ({
-    mostrandoUsuario: null,
-    vistaAgregarUsuario: false
+    vistaAgregar: false
   }),
   methods: {
-    irAgregarUsuario: function() {
-      this.vistaAgregarUsuario = true;
+    irAgregar: function() {
+      this.vistaAgregar = true;
     },
-    irTablaUsuarios: function() {
-      this.vistaAgregarUsuario = false;
+    irTabla: function() {
+      this.vistaAgregar = false;
     }
   }
 }
@@ -44,11 +43,11 @@ export default {
   font-family: Roboto, sans-serif;
 }
 
-#admin-administradores .tarjeta-admins {
+#admin-administradores .tarjeta {
   width: 600px;
 }
 
-#admin-administradores .tarjeta-admins .contenido {
+#admin-administradores .tarjeta .contenido {
   margin-top: 10px;
 }
 

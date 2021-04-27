@@ -3,7 +3,7 @@
     <div class="menu">
       <div
         v-for="(d, i) in datosMenu"
-        :key="`menu-${i}`"
+        :key="i"
         :class="`${d.tipo} ${seleccionado == d.id ? 'seleccionado' : ''}`"
         @click="seleccionarMenu(d)"
       >

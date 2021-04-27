@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-col tarjeta-form">
     <div class="cabeza">
-      <i class="fas fa-arrow-left pointer" style="color: #AAA" @click="$emit('irTablaAlumnos')"></i>
+      <i class="fas fa-arrow-left pointer" style="color: #AAA" @click="$emit('irTabla')"></i>
     </div>
     <div class="contenido">
       <div class="text-center">
@@ -42,7 +42,7 @@ export default {
     apellido_m: '',
     usuario: '',
     grupo: '',
-    error: null
+    error: ''
   }),
   methods: {
     enviar: function() {}

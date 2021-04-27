@@ -1,10 +1,10 @@
 <template>
   <div id="admin-alumnos">
     <div class="d-flex justify-center">
-      <div class="tarjeta-admins tarjeta">
+      <div class="tarjeta">
         <transition name="fade" mode="out-in">
-          <AlumnosTabla v-if="!vistaAgregar" @irAgregarAlumno="irAgregarAlumno"/>
-          <AlumnosAgregar v-else @irTablaAlumnos="irTablaAlumnos"/>
+          <AlumnosTabla v-if="!vistaAgregar" @irAgregar="irAgregar"/>
+          <AlumnosAgregar v-else @irTabla="irTabla"/>
         </transition>
       </div>
     </div>
@@ -13,7 +13,7 @@
 
 <script>
 
-import AlumnosTabla from './Alumnos/AlumnosTabla';
+import AlumnosTabla from './Alumnos/AlumnosTabla'
 import AlumnosAgregar from './Alumnos/AlumnosAgregar'
 
 export default {
@@ -23,14 +23,13 @@ export default {
     AlumnosAgregar
   },
   data: () => ({
-    mostrandoAlumno: null,
     vistaAgregar: false
   }),
   methods: {
-    irAgregarAlumno: function() {
+    irAgregar: function() {
       this.vistaAgregar = true;
     },
-    irTablaAlumnos: function() {
+    irTabla: function() {
       this.vistaAgregar = false;
     }
   }
@@ -44,13 +43,12 @@ export default {
   font-family: Roboto, sans-serif;
 }
 
-#admin-alumnos .tarjeta-admins {
+#admin-alumnos .tarjeta {
   width: 600px;
 }
 
-#admin-alumnos .tarjeta-admins .contenido {
+#admin-alumnos .tarjeta .contenido {
   margin-top: 10px;
 }
-
 
 </style>

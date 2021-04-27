@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-col">
     <div class="cabeza">
-      <button class="material-btn verde icono f-right" @click="$emit('irAgregarUsuario')"><i class="fas fa-user-plus"></i></button>
+      <button class="material-btn verde icono f-right" @click="$emit('irAgregar')"><i class="fas fa-user-plus"></i></button>
     </div>
     <div class="contenido">
       <table class="tabla rayada verde">
@@ -12,7 +12,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(user, i) in usuarios" :key="`admins-${i}`">
+          <tr v-for="(user, i) in usuarios" :key="i">
             <td class="text-left rellenar">{{ `${user.nombres} ${user.apellido_p} ${user.apellido_m}` }}</td>
             <td class="text-center"><a><i class="fas fa-pen"></i></a></td>
           </tr>

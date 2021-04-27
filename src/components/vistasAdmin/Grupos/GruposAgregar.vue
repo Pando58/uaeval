@@ -5,15 +5,18 @@
     </div>
     <div class="contenido">
       <div class="text-center">
-        <h4>Agregar docente</h4>
+        <h4>Agregar grupo</h4>
         <span class="msg-error" v-if="error">{{ error }}</span>
       </div>
-      <div class="nombre">
-        <input type="text" placeholder="Nombre(s)" v-model="nombre">
-        <input type="text" placeholder="Apellido Paterno" v-model="apellido_p">
-        <input type="text" placeholder="Apellido Materno" v-model="apellido_m">
+      <div class="d-flex">
+        <input type="text" class="flex-grow-1" placeholder="Grupo" v-model="grupo">
       </div>
-      <br>
+      <div class="d-flex align-center">
+        <span class="etiqueta">Docentes a evaluar:</span>
+        <select multiple class="flex-grow-1" v-model="docentes">
+          <option v-for="(docente, i) in lista_docentes" :key="i" :value="i">{{docente.nombre}}</option>
+        </select>
+      </div>
       <div class="f-right">
         <button class="material-btn verde" @click="enviar">Agregar</button>
       </div>
@@ -23,14 +26,16 @@
 
 <script>
 
-import api from '../../../plugins/api';
-
 export default {
-  name: 'DocentesAgregar',
+  name: 'GruposAgregar',
   data: () => ({
-    nombre: '',
-    apellido_p: '',
-    apellido_m: '',
+    grupo: '',
+    docentes: [],
+    lista_docentes: [
+      { nombre: 'Juan' },
+      { nombre: 'Pedro' },
+      { nombre: 'Fermin' }
+    ],
     error: null
   }),
   methods: {
@@ -39,13 +44,3 @@ export default {
 }
 
 </script>
-
-<style scoped>
-
-.nombre {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  margin-top: 8px;
-}
-
-</style>
