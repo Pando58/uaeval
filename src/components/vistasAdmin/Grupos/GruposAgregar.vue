@@ -11,11 +11,16 @@
       <div class="d-flex">
         <input type="text" class="flex-grow-1" placeholder="Grupo" v-model="grupo">
       </div>
-      <div class="d-flex align-center">
-        <span class="etiqueta">Docentes a evaluar:</span>
-        <select multiple class="flex-grow-1" v-model="docentes">
-          <option v-for="(docente, i) in lista_docentes" :key="i" :value="i">{{docente.nombre}}</option>
-        </select>
+      <span class="etiqueta">Docentes a evaluar:</span>
+      <div class="selectMultiple">
+        <div
+        class="opcion"
+        v-for="(docente, i) in docentes"
+        :key="i"
+        >
+          <input type="checkbox" name="" :id="`d-${i}`" v-model="docente.seleccionado">
+          <label :for="`d-${i}`">{{docente.nombre}}</label>
+        </div>
       </div>
       <div class="f-right">
         <button class="material-btn verde" @click="enviar">Agregar</button>
@@ -30,17 +35,43 @@ export default {
   name: 'GruposAgregar',
   data: () => ({
     grupo: '',
-    docentes: [],
-    lista_docentes: [
-      { nombre: 'Juan' },
-      { nombre: 'Pedro' },
-      { nombre: 'Fermin' }
+    docentes: [
+      { id: 1, nombre: 'Juan' },
+      { id: 2, nombre: 'Pedro' },
+      { id: 3, nombre: 'Eduardo' }
     ],
     error: null
   }),
   methods: {
-    enviar: function() {}
+    enviar: function() {
+      const grupo = this.grupo;
+      const docentes = this.docentes.filter(i => i.seleccionado);
+
+      console.log(grupo);
+      console.log(docentes);
+    }
   }
 }
 
 </script>
+
+<style scoped>
+
+.selectMultiple {
+  margin: 6px;
+  border: 1px solid #CCC;
+  border-radius: 4px;
+  max-height: 200px;
+  overflow: auto;
+}
+
+.selectMultiple .opcion {
+  padding: 8px;
+}
+
+.selectMultiple .opcion input,
+.selectMultiple .opcion label {
+  cursor: pointer;
+}
+
+</style>
