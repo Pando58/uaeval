@@ -1,7 +1,7 @@
 <template>
   <div class="navegacion">
-    <a @click="cambiarCategoria(false)"><i class="fas fa-arrow-left izq"></i>Anterior</a>
-    <a @click="cambiarCategoria(true)">Siguiente<i class="fas fa-arrow-right der"></i></a>
+    <a @click="cambiarCategoria(false)" :class="claseHayCategoria(-1)"><i class="fas fa-arrow-left izq"></i>Anterior</a>
+    <a @click="cambiarCategoria(true)" :class="claseHayCategoria(1)">Siguiente<i class="fas fa-arrow-right der"></i></a>
   </div>
 </template>
 
@@ -9,9 +9,16 @@
 
 export default {
   name: 'CuestionarioNav',
+  props: [
+    'categorias',
+    'categoria'
+  ],
   methods: {
     cambiarCategoria(siguiente) {
-      console.log(siguiente ? 'siguiente' : 'anterior');
+      this.$emit('cambiarCategoria', siguiente ? 1 : -1);
+    },
+    claseHayCategoria(direccion) {
+      return this.categorias.find(i => i.id == this.categoria + direccion) ? '' : 'deshabilitado';
     }
   }
 }
@@ -38,9 +45,15 @@ a {
   /* text-decoration: none; */
 }
 
-a:hover {
+a:hover:not(.deshabilitado) {
   color: rgb(44, 180, 90);
   border-color: rgb(44, 180, 90);
+}
+
+a.deshabilitado {
+  opacity: 0.4;
+  cursor: default;
+  user-select: none;
 }
 
 a i {

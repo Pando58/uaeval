@@ -1,5 +1,5 @@
 <template>
-  <div class="preguntas">
+  <div class="preguntas" v-if="categoria.id == selCategoria">
     <h4 class="categoria">{{ categoria.categoria }}</h4>
     <div class="pregunta" v-for="(pregunta, i) in preguntas" :key="i">
       <h3>{{ `${pregunta.id}. ${pregunta.pregunta}` }}</h3>
@@ -8,24 +8,25 @@
         <thead>
           <tr>
             <th></th>
-            <th>Totalmente de acuerdo</th>
-            <th>De acuerdo</th>
-            <th>Indiferente</th>
-            <th>En desacuerdo</th>
             <th>Altamente en desacuerdo</th>
+            <th>En desacuerdo</th>
+            <th>Indiferente</th>
+            <th>De acuerdo</th>
+            <th>Totalmente de acuerdo</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(docente, j) in docentes" :key="j">
             <td class="nombre-profesor">{{ `${docente.nombres} ${docente.apellido_p} ${docente.apellido_m}` }}</td>
             <td v-for="k in 5" :key="k">
-              <input type="radio" :name="`p${i}d${j}`" :id="`p${i}d${j}v${k}`">
+              <!-- ARREGLAR V-MODEL -->
+              <input type="radio" :name="`p${i}d${j}`" :id="`p${i}d${j}v${k}`" :value="k" v-model="respuestas[pregunta.id][docente.id]">
               <label :for="`p${i}d${j}v${k}`"></label>
             </td>
           </tr>
         </tbody>
       </table>
-      
+      <button @click="test">asd</button>
     </div>
   </div>
 </template>
@@ -36,9 +37,25 @@ export default {
   name: 'CuestionarioPreguntas',
   props: [
     'categoria',
+    'selCategoria',
     'preguntas',
     'docentes'
-  ]
+  ],
+  data: () => ({
+    respuestas: {}
+  }),
+  created() {
+    this.preguntas.forEach(i => {
+      this.respuestas[i.id] = {};
+    });
+  },
+  methods: {
+    test() {
+      console.log(this.preguntas);
+      return
+      this.$emit('enviarRespuestas', this.respuestas);
+    }
+  }
 }
 
 </script>

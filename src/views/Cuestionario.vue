@@ -16,14 +16,16 @@
         <CuestionarioBarra/>
         <hr>
         <CuestionarioPreguntas
-        v-for="(cat, i) in getCategoria"
+        v-for="(cat, i) in categorias"
         :key="i"
         :categoria="cat"
-        :preguntas="getPreguntas"
+        :selCategoria="categoria"
+        :preguntas="getPreguntas(cat)"
         :docentes="docentes"
+        @enviarRespuestas="enviarRespuestas"
         />
         <hr>
-        <CuestionarioNav/>
+        <CuestionarioNav @cambiarCategoria="cambiarCategoria" :categorias="categorias" :categoria="categoria"/>
       </div>
     </main>
   </div>
@@ -43,12 +45,13 @@ export default {
     CuestionarioNav
   },
   data: () => ({
+    categoria: 1,
+    respuestas: {},
     categorias: [
       { id: 1, categoria: 'Categoria uno'},
       { id: 2, categoria: 'Categoria dos'},
       { id: 3, categoria: 'Categoria tres'},
     ],
-    categoria: 1,
     preguntas: [
       { id: 1, pregunta: 'Pregunta uno', id_categoria: 1 },
       { id: 2, pregunta: 'Pregunta dos', id_categoria: 1 },
@@ -75,18 +78,27 @@ export default {
 
     observer.observe(this.$refs.nav);
   },
-  computed: {
-    getCategoria: function() {
-      return this.categorias.filter(i => i.id == this.categoria);
-    },
-    getPreguntas: function() {
-      return this.preguntas
-      .filter(i => i.id_categoria == this.categoria)
-      .sort((a, b) => {
+  methods: {
+    getPreguntas: function(cat) {      
+      return this.preguntas.filter(i => i.id_categoria == cat.id).sort((a, b) => {
         if (a.id < b.id) return -1;
         if (a.id > b.id) return 1;
         return 0;
       });
+    },
+    getCategoria: function() {
+      return this.categorias.filter(i => i.id == this.categoria);
+    },
+    enviarRespuestas: function(res) {
+      for (const e in res) {
+        respuestas[e] = res[e];
+      }
+    },
+    cambiarCategoria: function(direccion) {
+      if (this.categorias.find(i => i.id == this.categoria + direccion)) {
+        this.categoria += direccion;
+        window.scrollTo(0,0);
+      }
     }
   }
 }
@@ -104,6 +116,7 @@ export default {
 
 .bg .arriba {
   background: rgb(25, 155, 79);
+  box-shadow: 0px -10px 12px 8px rgba(0, 0, 0, 0.9);
   height: 50vh;
 }
 
@@ -157,7 +170,7 @@ main {
 
 .cuestionario {
   width: 80%;
-  margin-top: 200px;
+  margin-top: 120px;
   margin-bottom: 200px;
   background: #FFF;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
