@@ -8,7 +8,7 @@
     <div class="nav d-flex" ref="nav">
       <div class="nombre">Juan Pérez</div>
       <div class="titulo">Evaluación Docente</div>
-      <div class="menu">:</div>
+      <div class="menu"><i class="fas fa-chevron-down"></i></div>
     </div>
     
     <main>
@@ -22,6 +22,8 @@
         :preguntas="getPreguntas"
         :docentes="docentes"
         />
+        <hr>
+        <CuestionarioNav/>
       </div>
     </main>
   </div>
@@ -31,12 +33,14 @@
 
 import CuestionarioBarra from '../components/cuestionario/CuestionarioBarra'
 import CuestionarioPreguntas from '../components/cuestionario/CuestionarioPreguntas'
+import CuestionarioNav from '../components/cuestionario/CuestionarioNav'
 
 export default {
   name: 'Cuestionario',
   components: {
     CuestionarioBarra,
-    CuestionarioPreguntas
+    CuestionarioPreguntas,
+    CuestionarioNav
   },
   data: () => ({
     categorias: [
@@ -57,8 +61,10 @@ export default {
       { id: 9, pregunta: 'Pregunta nueve', id_categoria: 3 }
     ],
     docentes: [
-      { id: 1, nombres: 'Docente', apellido_p: 'Paterno', apellido_m: 'Materno'},
-      { id: 2, nombres: 'Docente2', apellido_p: 'Paterno', apellido_m: 'Materno'}
+      { id: 1, nombres: 'Docente', apellido_p: 'Uno', apellido_m: '1'},
+      { id: 2, nombres: 'Docente', apellido_p: 'Dos', apellido_m: '2'},
+      { id: 3, nombres: 'Docente', apellido_p: 'Tres', apellido_m: '3'},
+      { id: 4, nombres: 'Docente', apellido_p: 'Cuatro', apellido_m: '4'}
     ]
   }),
   mounted: function() {
@@ -103,7 +109,7 @@ export default {
 
 hr {
   border-width:0;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 
@@ -115,6 +121,7 @@ hr {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 10;
   background: rgba(0, 0, 0, 0);
   font-family: Rubik, sans-serif;
   color: #FFF;

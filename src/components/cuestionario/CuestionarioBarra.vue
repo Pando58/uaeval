@@ -16,7 +16,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-bottom: 6px;
+  padding-top: 6px;
   font-family: Rubik, sans-serif;
 }
 
