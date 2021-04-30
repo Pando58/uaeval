@@ -19,15 +19,14 @@
           <tr v-for="(docente, j) in docentes" :key="j">
             <td class="nombre-profesor">{{ `${docente.nombres} ${docente.apellido_p} ${docente.apellido_m}` }}</td>
             <td v-for="k in 5" :key="k">
-              <!-- ARREGLAR V-MODEL -->
-              <input type="radio" :name="`p${i}d${j}`" :id="`p${i}d${j}v${k}`" :value="k" v-model="respuestas[pregunta.id][docente.id]">
+              <input type="radio" :name="`p${i}d${j}`" :id="`p${i}d${j}v${k}`" :value="k" v-model="respuestas[pregunta.id][docente.id]" @click="guardarRespuestas">
               <label :for="`p${i}d${j}v${k}`"></label>
             </td>
           </tr>
         </tbody>
       </table>
-      <button @click="test">asd</button>
     </div>
+    <button @click="guardarRespuestas"></button>
   </div>
 </template>
 
@@ -39,21 +38,23 @@ export default {
     'categoria',
     'selCategoria',
     'preguntas',
-    'docentes'
+    'docentes',
+    'respuestas'
   ],
-  data: () => ({
-    respuestas: {}
-  }),
-  created() {
-    this.preguntas.forEach(i => {
-      this.respuestas[i.id] = {};
-    });
+  // data: () => ({
+  //   respuestas: {}
+  // }),
+  watch: {
+    respuestas: {
+      handler() {
+        console.log(this.respuestas);
+      },
+      deep: true
+    }
   },
   methods: {
-    test() {
-      console.log(this.preguntas);
-      return
-      this.$emit('enviarRespuestas', this.respuestas);
+    guardarRespuestas() {
+      this.$emit('guardarRespuestas');
     }
   }
 }

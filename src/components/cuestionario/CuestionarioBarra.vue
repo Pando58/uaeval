@@ -1,12 +1,46 @@
 <template>
   <div class="barra-progreso">
-    <div class="progreso">(37/55)</div>
+    <div class="progreso">({{ numRespuestas }}/{{ numPreguntas }})</div>
     <div class="barra">
       <div class="completado"></div>
       <div class="faltante"></div>
     </div>
   </div>
 </template>
+
+<script>
+
+export default {
+  name: 'CuestionarioBarra',
+  props: [
+    'respuestas',
+    'numPreguntas'
+  ],
+  data: () => ({
+    numRespuestas: 0
+  }),
+  watch: {
+    respuestas: {
+      deep: true,
+      handler() {
+        let num = 0;
+
+        for (let i in this.respuestas) {
+          for (let j in this.respuestas[i]) {
+            if (this.respuestas[i][j] != null) {
+              num++;
+              break;
+            }
+          }
+        }
+
+        this.numRespuestas = num;
+      }
+    }
+  }
+}
+
+</script>
 
 <style scoped>
 

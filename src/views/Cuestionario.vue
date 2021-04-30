@@ -8,12 +8,19 @@
     <div class="nav d-flex" ref="nav">
       <div class="nombre">Juan Pérez</div>
       <div class="titulo">Evaluación Docente</div>
-      <div class="menu"><i class="fas fa-chevron-down"></i></div>
+      <div class="menu">
+        <div class="dropdown">
+          <i class="fas fa-chevron-down"></i>
+          <div class="dropdown-content">
+            <a @click="cerrarSesion()">Cerrar sesión</a>
+          </div>
+        </div>
+      </div>
     </div>
     
     <main>
       <div class="cuestionario">
-        <CuestionarioBarra/>
+        <CuestionarioBarra :respuestas="respuestas" :numPreguntas="preguntas.length"/>
         <hr>
         <CuestionarioPreguntas
         v-for="(cat, i) in categorias"
@@ -21,8 +28,9 @@
         :categoria="cat"
         :selCategoria="categoria"
         :preguntas="getPreguntas(cat)"
+        :respuestas="respuestas"
         :docentes="docentes"
-        @enviarRespuestas="enviarRespuestas"
+        @guardarRespuestas="guardarRespuestas"
         />
         <hr>
         <CuestionarioNav @cambiarCategoria="cambiarCategoria" :categorias="categorias" :categoria="categoria"/>
@@ -58,7 +66,7 @@ export default {
       { id: 3, pregunta: 'Pregunta tres', id_categoria: 1 },
       { id: 4, pregunta: 'Pregunta cuatro', id_categoria: 2 },
       { id: 5, pregunta: 'Pregunta cinco', id_categoria: 2 },
-      { id: 6, pregunta: 'Pregunta seis', id_categoria: 2 },
+      { id: 6, pregunta: 'Pregunta seis', id_categoria: 3 },
       { id: 7, pregunta: 'Pregunta siete', id_categoria: 3 },
       { id: 8, pregunta: 'Pregunta ocho', id_categoria: 3 },
       { id: 9, pregunta: 'Pregunta nueve', id_categoria: 3 }
@@ -68,7 +76,7 @@ export default {
       { id: 2, nombres: 'Docente', apellido_p: 'Dos', apellido_m: '2'},
       { id: 3, nombres: 'Docente', apellido_p: 'Tres', apellido_m: '3'},
       { id: 4, nombres: 'Docente', apellido_p: 'Cuatro', apellido_m: '4'}
-    ]
+    ],
   }),
   mounted: function() {
     const observer = new IntersectionObserver( 
@@ -77,6 +85,14 @@ export default {
     );
 
     observer.observe(this.$refs.nav);
+  },
+  created: function() {
+    this.preguntas.forEach(i => {
+      this.respuestas[i.id] = {};
+      this.docentes.forEach(j => {
+        this.respuestas[i.id][j.id] = null; // Math.floor((Math.random() * 5) + 1)
+      });
+    });
   },
   methods: {
     getPreguntas: function(cat) {      
@@ -89,16 +105,20 @@ export default {
     getCategoria: function() {
       return this.categorias.filter(i => i.id == this.categoria);
     },
-    enviarRespuestas: function(res) {
-      for (const e in res) {
-        respuestas[e] = res[e];
-      }
+    guardarRespuestas: function(res) {
+      // Llamar a la API
+      console.log(this.respuestas);
     },
     cambiarCategoria: function(direccion) {
       if (this.categorias.find(i => i.id == this.categoria + direccion)) {
         this.categoria += direccion;
-        window.scrollTo(0,0);
+        setTimeout(() => window.scrollTo(0,0), 100);
       }
+    },
+    cerrarSesion() {
+      this.$store.state.token = '';
+      localStorage.setItem('token', '');
+      this.$router.push('/');
     }
   }
 }
@@ -175,6 +195,51 @@ main {
   background: #FFF;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
   border-radius: 5px;
+}
+
+
+
+
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  padding: 12px;
+  background: #F1F1F1;
+  min-width: 140px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown-content a {
+  transition: 0.15s;
+  color: #222;
+  text-shadow: none;
+}
+
+.dropdown-content a:hover {
+  color: rgb(25, 155, 79);
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown i {
+  transition: 0.25s;
+  cursor: pointer;
+  margin-left: 12px;
+  font-size: 1rem;
+}
+
+.dropdown:hover i {
+  transform: rotate(180deg);
+  text-shadow: 0px -2px 3px rgba(0, 0, 0, 0.2);
 }
 
 </style>
