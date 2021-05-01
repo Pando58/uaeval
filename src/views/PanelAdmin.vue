@@ -24,8 +24,8 @@
 
 <script>
 
-import api from '../plugins/api'
-import { parseJWT, cerrarSesion, revisarSesion } from '../plugins/funciones'
+import api from '../extras/api'
+import { parseJWT, cerrarSesion, revisarSesion } from '../extras/funciones'
 
 import AdminNavbar from '@/components/AdminNavbar.vue'
 import AdminSidebar from '@/components/AdminSidebar.vue'

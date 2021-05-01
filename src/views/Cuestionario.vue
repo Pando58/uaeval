@@ -44,7 +44,7 @@
 import CuestionarioBarra from '../components/cuestionario/CuestionarioBarra'
 import CuestionarioPreguntas from '../components/cuestionario/CuestionarioPreguntas'
 import CuestionarioNav from '../components/cuestionario/CuestionarioNav'
-import { cerrarSesion, revisarSesion } from '../plugins/funciones'
+import { cerrarSesion, revisarSesion } from '../extras/funciones'
 
 export default {
   name: 'Cuestionario',

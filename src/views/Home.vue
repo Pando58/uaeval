@@ -8,8 +8,8 @@
 <script>
 
 // @ is an alias to /src
-import api from '../plugins/api';
-import { parseJWT } from '../plugins/funciones';
+import api from '../extras/api';
+import { parseJWT } from '../extras/funciones';
 
 export default {
   name: 'Home',

@@ -63,7 +63,7 @@
 
 <script>
 
-import api from '../plugins/api'
+import api from '../extras/api'
 
 export default {
   name: 'Login',
