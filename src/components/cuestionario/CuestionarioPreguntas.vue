@@ -19,14 +19,13 @@
           <tr v-for="(docente, j) in docentes" :key="j">
             <td class="nombre-profesor">{{ `${docente.nombres} ${docente.apellido_p} ${docente.apellido_m}` }}</td>
             <td v-for="k in 5" :key="k">
-              <input type="radio" :name="`p${i}d${j}`" :id="`p${i}d${j}v${k}`" :value="k" v-model="respuestas[pregunta.id][docente.id]" @click="guardarRespuestas">
+              <input type="radio" :name="`p${i}d${j}`" :id="`p${i}d${j}v${k}`" :value="k" v-model="respuestas[pregunta.id][docente.id]" @change="guardarRespuestas">
               <label :for="`p${i}d${j}v${k}`"></label>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <button @click="guardarRespuestas"></button>
   </div>
 </template>
 

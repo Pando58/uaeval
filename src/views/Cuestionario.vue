@@ -20,7 +20,7 @@
     
     <main>
       <div class="cuestionario">
-        <CuestionarioBarra :respuestas="respuestas" :numPreguntas="preguntas.length" :nombre="nombre"/>
+        <CuestionarioBarra ref="barra" :numPreguntas="preguntas.length" :respuestas="respuestas"/>
         <hr>
         <CuestionarioPreguntas
         v-for="(cat, i) in categorias"
@@ -116,9 +116,11 @@ export default {
     getCategoria: function() {
       return this.categorias.filter(i => i.id == this.categoria);
     },
-    guardarRespuestas: function(res) {
+    guardarRespuestas: function() {
       // Llamar a la API
       console.log(this.respuestas);
+      
+      this.$refs.barra.actualizar();
     },
     cambiarCategoria: function(direccion) {
       if (this.categorias.find(i => i.id == this.categoria + direccion)) {

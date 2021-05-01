@@ -2,8 +2,8 @@
   <div class="barra-progreso">
     <div class="progreso">({{ numRespuestas }}/{{ numPreguntas }})</div>
     <div class="barra">
-      <div class="completado"></div>
-      <div class="faltante"></div>
+      <div class="completado" :style="estiloCompletado()"></div>
+      <div class="faltante" :style="estiloFaltante()"></div>
     </div>
   </div>
 </template>
@@ -19,23 +19,26 @@ export default {
   data: () => ({
     numRespuestas: 0
   }),
-  watch: {
-    respuestas: {
-      deep: true,
-      handler() {
-        let num = 0;
+  methods: {
+    actualizar() {
+      let num = 0;
 
-        for (let i in this.respuestas) {
-          for (let j in this.respuestas[i]) {
-            if (this.respuestas[i][j] != null) {
-              num++;
-              break;
-            }
+      for (let i in this.respuestas) {
+        for (let j in this.respuestas[i]) {
+          if (this.respuestas[i][j] != null) {
+            num++;
+            break;
           }
         }
-
-        this.numRespuestas = num;
       }
+
+      this.numRespuestas = num;
+    },
+    estiloCompletado() {
+      return `flex-grow: ${this.numRespuestas}`;
+    },
+    estiloFaltante() {
+      return `flex-grow: ${this.numPreguntas - this.numRespuestas}`;
     }
   }
 }
@@ -68,14 +71,25 @@ export default {
   border-radius: 7px;
 }
 
-.completado {
-  flex-grow: 37;
-  background: rgb(50, 199, 100);
-  border-radius: 7px;
+.completado, .faltante {
+  transition: 0.7s;
 }
 
-.faltante {
-  flex-grow: 18;
+.completado {
+  flex-grow: 37;
+  border-radius: 7px;
+  background-image: repeating-linear-gradient(135deg, #2dbd5d, #2dbd5d 10px, #28a853 10px, #28a853 20px);
+  background-size: 100vw 20px;
+  animation: animBarra 1s linear infinite;
+}
+
+@keyframes animBarra {
+  from {
+    background-position: -40px 0;
+  }
+  to {
+    background-position: -12px 0;
+  }
 }
 
 </style>
