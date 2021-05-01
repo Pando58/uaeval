@@ -24,11 +24,17 @@ export default {
       let num = 0;
 
       for (let i in this.respuestas) {
+        let completado = true;
+        
         for (let j in this.respuestas[i]) {
-          if (this.respuestas[i][j] != null) {
-            num++;
+          if (this.respuestas[i][j] == null) {
+            completado = false;
             break;
           }
+        }
+
+        if (completado) {
+          num++;
         }
       }
 
