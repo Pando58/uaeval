@@ -6,13 +6,13 @@
     </div>
 
     <div class="nav d-flex" ref="nav">
-      <div class="nombre">Juan Pérez</div>
+      <div class="nombre">{{ nombre }}</div>
       <div class="titulo">Evaluación Docente</div>
       <div class="menu">
         <div class="dropdown">
           <i class="fas fa-chevron-down"></i>
           <div class="dropdown-content">
-            <a @click="cerrarSesion()">Cerrar sesión</a>
+            <a @click="cerrarSesion">Cerrar sesión</a>
           </div>
         </div>
       </div>
@@ -20,7 +20,7 @@
     
     <main>
       <div class="cuestionario">
-        <CuestionarioBarra :respuestas="respuestas" :numPreguntas="preguntas.length"/>
+        <CuestionarioBarra :respuestas="respuestas" :numPreguntas="preguntas.length" :nombre="nombre"/>
         <hr>
         <CuestionarioPreguntas
         v-for="(cat, i) in categorias"
@@ -44,6 +44,7 @@
 import CuestionarioBarra from '../components/cuestionario/CuestionarioBarra'
 import CuestionarioPreguntas from '../components/cuestionario/CuestionarioPreguntas'
 import CuestionarioNav from '../components/cuestionario/CuestionarioNav'
+import { cerrarSesion, revisarSesion } from '../plugins/funciones'
 
 export default {
   name: 'Cuestionario',
@@ -53,6 +54,7 @@ export default {
     CuestionarioNav
   },
   data: () => ({
+    nombre: '',
     categoria: 1,
     respuestas: {},
     categorias: [
@@ -87,6 +89,15 @@ export default {
     observer.observe(this.$refs.nav);
   },
   created: function() {
+    const sesion = revisarSesion(this, false);
+
+    if (sesion.token) {
+      this.nombre = `${sesion.payload.data.nombres} ${sesion.payload.data.apellido_p} ${sesion.payload.data.apellido_m}`;
+    } else {
+      this.nombre = '...';
+    }
+
+    // Inicializar preguntas - Falta consulta a la API
     this.preguntas.forEach(i => {
       this.respuestas[i.id] = {};
       this.docentes.forEach(j => {
@@ -115,11 +126,7 @@ export default {
         setTimeout(() => window.scrollTo(0,0), 100);
       }
     },
-    cerrarSesion() {
-      this.$store.state.token = '';
-      localStorage.setItem('token', '');
-      this.$router.push('/');
-    }
+    cerrarSesion() { cerrarSesion(this) }
   }
 }
 

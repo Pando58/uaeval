@@ -9,7 +9,7 @@
 
 // @ is an alias to /src
 import api from '../plugins/api';
-import parseJWT from '../plugins/parseJWT';
+import { parseJWT } from '../plugins/funciones';
 
 export default {
   name: 'Home',

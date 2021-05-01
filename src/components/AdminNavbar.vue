@@ -33,9 +33,7 @@ export default {
   },
   methods: {
     cerrarSesion() {
-      this.$store.state.token = '';
-      localStorage.setItem('token', '');
-      this.$router.push('/');
+      this.$emit('cerrarSesion');
     }
   }
 }

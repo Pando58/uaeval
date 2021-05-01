@@ -1,6 +1,6 @@
 <template>
   <div id="admin-principal">
-    <AdminNavbar :anchoSidebar="anchoSidebar" :nombre="nombre"/>
+    <AdminNavbar :anchoSidebar="anchoSidebar" :nombre="nombre" @cerrarSesion="cerrarSesion"/>
     <div id="debajoNavbar">
       <AdminSidebar :ancho="anchoSidebar" @seleccionarVista="cambiarVista"/>
       <div id="contenedorPagina">
@@ -25,7 +25,7 @@
 <script>
 
 import api from '../plugins/api'
-import parseJWT from '../plugins/parseJWT'
+import { parseJWT, cerrarSesion, revisarSesion } from '../plugins/funciones'
 
 import AdminNavbar from '@/components/AdminNavbar.vue'
 import AdminSidebar from '@/components/AdminSidebar.vue'
@@ -58,23 +58,17 @@ export default {
   methods: {
     cambiarVista(vista) {
       this.vista = vista;
-    }
+    },
+    cerrarSesion() { cerrarSesion(this) }
   },
   created() {
-    const token = this.$store.state.token;
+    const sesion = revisarSesion(this, true);
 
-    if (!token) {
-      this.$router.replace('/');
-      return;
+    if (sesion.token) {
+      this.nombre = `${sesion.payload.data.nombres} ${sesion.payload.data.apellido_p} ${sesion.payload.data.apellido_m}`;
+    } else {
+      this.nombre = '...';
     }
-
-    const payload = parseJWT(token);
-
-    if (!payload.data.admin) {
-      this.$router.replace('/');
-    }
-
-    this.nombre = `${payload.data.nombres} ${payload.data.apellido_p} ${payload.data.apellido_m}`;
   }
 }
 
