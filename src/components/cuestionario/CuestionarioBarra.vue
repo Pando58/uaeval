@@ -54,6 +54,12 @@ export default {
 <style scoped>
 
 .barra-progreso {
+  position: sticky;
+  top: 59px;
+  background: #FFF;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  z-index: 9;
+  border-radius: 5px;
   height: 72px;
   display: flex;
   flex-direction: column;

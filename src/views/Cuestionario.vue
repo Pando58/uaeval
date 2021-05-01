@@ -21,7 +21,7 @@
     <main>
       <div class="cuestionario">
         <CuestionarioBarra ref="barra" :numPreguntas="preguntas.length" :respuestas="respuestas"/>
-        <hr>
+        <!-- <hr> -->
         <CuestionarioPreguntas
         v-for="(cat, i) in categorias"
         :key="i"
@@ -168,7 +168,7 @@ hr {
   font-family: Rubik, sans-serif;
   color: #FFF;
   text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
-  transition: 0.4s;
+  transition: 0.2s;
 }
 
 .nav.isSticky {
