@@ -43,7 +43,7 @@ export function revisarSesion(_this, admin) {
   res.payload = payload;
 
   // Si hay un error de autorizacion con el servidor
-  api.post('/auth', {}, {
+  api.post('/auth/auth', {}, {
     headers: {
       'Authorization': `Bearer ${token}`
     }

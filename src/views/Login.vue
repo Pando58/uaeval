@@ -89,7 +89,7 @@ export default {
       return !this.loginAdmin ? 'Matrícula' : 'Usuario'
     },
     submit() {
-      api.post('/login', {
+      api.post('/auth/login', {
         usuario: this.usuario,
         password: this.password,
         admin: this.loginAdmin ? 1 : 0

@@ -20,7 +20,7 @@ export default new Vuex.Store({
     'login': ({ commit, dispatch }, user) => {
       return new Promise((resolve, reject) => { // The Promise used for router redirect in login
         commit('login');
-        api.post('/login', user)
+        api.post('/auth/login', user)
         .then(resp => {
           /* const token = resp.data.token
           localStorage.setItem('user-token', token) // store the token in localstorage
