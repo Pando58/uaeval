@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import PanelAdmin from '../views/PanelAdmin.vue'
 import Cuestionario from '../views/Cuestionario.vue'
+import CrearPassword from '../views/CrearPassword.vue'
 import NotFound from '../views/404.vue'
 
 Vue.use(VueRouter)
@@ -28,6 +29,11 @@ const routes = [
     path: '/cuestionario',
     name: 'Cuestionario',
     component: Cuestionario
+  },
+  {
+    path: '/set_password',
+    name: 'CrearPassword',
+    component: CrearPassword
   },
   {
     path: '*',

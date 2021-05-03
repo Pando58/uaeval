@@ -42,7 +42,7 @@
 
         <transition name="fadeResize">
         <p class="mensaje-password" v-if="!loginAdmin">
-          <a>
+          <a @click="sinPassword">
             ¿Aún no tienes contraseña?
           </a>
         </p>
@@ -52,7 +52,7 @@
 
         <transition name="fadeResize">
         <p class="admin-login" v-if="!loginAdmin">
-          <a @click="switchLoginAdmin()">
+          <a @click="switchLoginAdmin">
             Ingreso de personal administrativo<i class="far fa-id-card"></i>
           </a>
         </p>
@@ -78,6 +78,9 @@ export default {
   methods: {
     switchLoginAdmin() {
       this.loginAdmin = !this.loginAdmin
+    },
+    sinPassword() {
+      this.$router.push('/set_password');
     },
     estiloLogin() {
       return {
