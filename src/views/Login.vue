@@ -22,13 +22,13 @@
           </p>
         </transition>
         
-        <div class="form-grupo">
-          <input type="text" v-model="usuario" id="log-usuario" class="form-input" placeholder=" ">
-          <label for="log-usuario" class="form-label">{{ matriculaOUsuario() }}</label>
+        <div class="material-input">
+          <input type="text" v-model="usuario" id="log-usuario" placeholder=" ">
+          <label for="log-usuario" >{{ matriculaOUsuario() }}</label>
         </div>
-        <div class="form-grupo">
-          <input type="password" v-model="password" id="log-password" class="form-input" placeholder=" ">
-          <label for="log-password" class="form-label">Contraseña</label>
+        <div class="material-input">
+          <input type="password" v-model="password" id="log-password" placeholder=" ">
+          <label for="log-password">Contraseña</label>
         </div>
         <input type="hidden" name="type" value="alumno">
 
@@ -171,10 +171,6 @@ export default {
   }
 }
 
-/* #login-main .form {
-  padding: 24px;
-} */
-
 #login-main .titulo {
   font-size: 1.4rem;
   font-weight: 600;
@@ -188,58 +184,6 @@ export default {
   color: rgb(22, 160, 68);
   margin-top: 0px;
   margin-bottom: 18px;
-}
-
-#login-main .form-grupo {
-  position: relative;
-  height: 38px;
-  margin: 12px 0px;
-}
-
-#login-main .form-input {
-  position: absolute;
-  top: 0;
-  left: 0;
-  border: 1px solid #BBB;
-  transition: border-color 0.2s ease-in-out;
-  border-radius: 4px;
-  outline: none;
-  padding-left: 8px;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-
-#login-main .form-input:focus {
-  border-color: rgb(27, 184, 79);
-  border-width: 2px;
-  padding-left: 7px;
-}
-
-#login-main .form-label {
-  position: absolute;
-  left: 5px;
-  top: 10px;
-  padding: 0 4px;
-  background-color: #FFF;
-  color: #757575;
-  font-size: 1rem;
-  transition: 0.2s;
-  z-index: 10;
-  cursor: text;
-}
-
-#login-main .form-input:focus + .form-label {
-  left: 6px;
-  top: -10px;
-  font-size: 12px;
-  color: rgb(27, 184, 79);
-}
-
-#login-main .form-input:not(:placeholder-shown):not(:focus) + .form-label {
-  left: 10px;
-  top: -10px;
-  font-size: 12px;
 }
 
 #login-main .form-button {
