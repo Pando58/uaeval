@@ -123,21 +123,31 @@ export default {
               reactivo: x.reactivo,
               id_categoria: parseInt(x.id_categoria)
             }));
+            
+            api.get(`/api/alumnos?id=${sesion.payload.data.id}`, authHeader)
+            .then(res => {
+              this.grupo = grupo;
+              this.docentes = docentes;
+              this.categorias = categorias;
+              this.reactivos = reactivos;
+              this.categoria = categorias[0].id;
+              
+              if (res.data[0].respuestas) {
+                this.respuestas = JSON.parse(res.data[0].respuestas);
+              } else {
+                this.respuestas = {};
+                
+                this.reactivos.forEach(i => {
+                  this.respuestas[i.id] = {};
+                  this.docentes.forEach(j => {
+                    this.respuestas[i.id][j.id] = null;
+                  });
+                });
+              }
 
-            this.grupo = grupo;
-            this.docentes = docentes;
-            this.categorias = categorias;
-            this.reactivos = reactivos;
-            this.categoria = categorias[0].id;
-
-            this.respuestas = {};
-
-            this.reactivos.forEach(i => {
-              this.respuestas[i.id] = {};
-              this.docentes.forEach(j => {
-                this.respuestas[i.id][j.id] = null;
-              });
-            });
+              this.$refs.barra.actualizar(this.respuestas);
+            })
+            .catch(err => console.log(err.response));
           })
           .catch(err => onError(err));
         })
@@ -158,11 +168,20 @@ export default {
     getCategoria: function() {
       return this.categorias.filter(i => i.id == this.categoria);
     },
-    guardarRespuestas: function() {
-      // Llamar a la API
-      console.log(this.respuestas);
+    guardarRespuestas: function(reactivo, docente) {
+      const sesion = revisarSesion(this, false);
       
-      this.$refs.barra.actualizar();
+      api.put(`/api/alumnos?id=${sesion.payload.data.id}`, {
+        respuestas: JSON.stringify(this.respuestas)
+      }, {
+        headers: { 'Authorization': `Bearer ${sesion.token}` }
+      }).then(res => {
+        console.log(res);
+      }).catch(err => {
+        console.log(err.response);
+      });
+      
+      this.$refs.barra.actualizar(this.respuestas);
     },
     cambiarCategoria: function(siguiente) {
       const direccion = siguiente ? 1 : -1;

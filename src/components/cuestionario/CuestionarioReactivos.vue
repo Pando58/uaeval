@@ -19,7 +19,7 @@
           <tr v-for="(docente, j) in docentes" :key="j">
             <td class="nombre-profesor">{{ `${docente.nombres} ${docente.apellido_p} ${docente.apellido_m}` }}</td>
             <td v-for="k in 5" :key="k">
-              <input type="radio" :name="`p${i}d${j}`" :id="`p${i}d${j}v${k}`" :value="k" v-model="respuestas[reactivo.id][docente.id]" @change="guardarRespuestas">
+              <input type="radio" :name="`p${i}d${j}`" :id="`p${i}d${j}v${k}`" :value="k" v-model="respuestas[reactivo.id][docente.id]" @change="guardarRespuestas(reactivo.id, docente.id)">
               <label :for="`p${i}d${j}v${k}`"></label>
             </td>
           </tr>
@@ -41,8 +41,8 @@ export default {
     'respuestas'
   ],
   methods: {
-    guardarRespuestas() {
-      this.$emit('guardarRespuestas');
+    guardarRespuestas(reactivo, docente) {
+      this.$emit('guardarRespuestas', reactivo, docente);
     }
   }
 }

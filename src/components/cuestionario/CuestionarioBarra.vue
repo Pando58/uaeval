@@ -20,14 +20,14 @@ export default {
     numRespuestas: 0
   }),
   methods: {
-    actualizar() {
+    actualizar(respuestas) {      
       let num = 0;
 
-      for (let i in this.respuestas) {
+      for (let i in respuestas) {
         let completado = true;
         
-        for (let j in this.respuestas[i]) {
-          if (this.respuestas[i][j] == null) {
+        for (let j in respuestas[i]) {
+          if (respuestas[i][j] == null) {
             completado = false;
             break;
           }
