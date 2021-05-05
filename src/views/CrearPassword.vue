@@ -1,17 +1,20 @@
 <template>
   <div id="crearPassword">
     <div class="form-crear">
+      <a class="flecha-atras" v-if="vista == 'cambio'" @click="vista = 'matricula'">
+        <i class="fas fa-arrow-left"></i>
+      </a>
       <div class="text-center">
         <h3>Establecer contraseña</h3>
         <br>
-        <transition name="fadeResize" mode="in-out">
+        <!-- <transition name="fadeResize" mode="in-out"> -->
           <p class="error-msg" v-if="error">
             <i class="fas fa-exclamation-triangle"></i> {{ error }}
           </p>
-        </transition>
+        <!-- </transition> -->
       </div>
 
-      <transition name="fadeResize" mode="in-out">
+      <!-- <transition name="fadeResize" mode="in-out"> -->
         <div class="vistaMatricula text-center" v-if="vista == 'matricula'">
           <h4>Introduce tu matrícula:</h4>
           <div class="material-input">
@@ -20,9 +23,9 @@
           </div>
           <button class="material-btn verde f-right" @click="verificarMatricula">Siguiente</button>
         </div>
-      </transition>
+      <!-- </transition> -->
         
-      <transition name="fadeResize" mode="in-out">
+      <!-- <transition name="fadeResize" mode="in-out"> -->
         <div class="vistaCambio" v-if="vista == 'cambio'">
           <div class="material-input">
             <input type="password" id="inpCrearPass" placeholder=" " v-model="pass">
@@ -42,7 +45,7 @@
             <button class="material-btn verde" @click="enviar">Aceptar</button>
           </div>
         </div>
-      </transition>
+      <!-- </transition> -->
 
     </div>
   </div>
@@ -113,6 +116,7 @@ export default {
 }
 
 #crearPassword .form-crear {
+  position: relative;
   width: 500px;
   padding: 18px;
   border-radius: 5px;
@@ -150,6 +154,12 @@ export default {
   font-size: 0.8rem;
   transform: translateY(-10%);
   margin-right: 4px;
+}
+
+#crearPassword .flecha-atras {
+  position: absolute;
+  left: 20px;
+  color: #777;
 }
 
 </style>
