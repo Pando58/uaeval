@@ -90,13 +90,25 @@ export default {
         password: this.pass
       })
       .then(res => {
+
         this.error = '';
-        this.$router.push('/');
+        this.$swal.fire({
+          icon: 'success',
+          title: 'Contraseña establecida',
+          confirmButtonText: 'Aceptar',
+          showCloseButton: true,
+        })
+        .then(result => {
+          this.$router.push('/');
+        });
+
       })
       .catch(err => {
+        
         const code = err.response.data.code;
         if (code == 4) this.error = 'Completa todos los campos';
         if (code == 5) this.error = 'Utiliza por lo menos 10 caracteres';
+
       });
     }
   }
