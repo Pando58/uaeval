@@ -1,8 +1,8 @@
 <template>
-  <div class="preguntas" v-if="categoria.id == selCategoria">
+  <div class="reactivos" v-if="categoria.id == selCategoria">
     <h4 class="categoria">{{ categoria.categoria }}</h4>
-    <div class="pregunta" v-for="(pregunta, i) in preguntas" :key="i">
-      <h3>{{ `${pregunta.id}. ${pregunta.pregunta}` }}</h3>
+    <div class="reactivo" v-for="(reactivo, i) in reactivos" :key="i">
+      <h3>{{ `${reactivo.id}. ${reactivo.reactivo}` }}</h3>
 
       <table>
         <thead>
@@ -19,7 +19,7 @@
           <tr v-for="(docente, j) in docentes" :key="j">
             <td class="nombre-profesor">{{ `${docente.nombres} ${docente.apellido_p} ${docente.apellido_m}` }}</td>
             <td v-for="k in 5" :key="k">
-              <input type="radio" :name="`p${i}d${j}`" :id="`p${i}d${j}v${k}`" :value="k" v-model="respuestas[pregunta.id][docente.id]" @change="guardarRespuestas">
+              <input type="radio" :name="`p${i}d${j}`" :id="`p${i}d${j}v${k}`" :value="k" v-model="respuestas[reactivo.id][docente.id]" @change="guardarRespuestas">
               <label :for="`p${i}d${j}v${k}`"></label>
             </td>
           </tr>
@@ -32,25 +32,14 @@
 <script>
 
 export default {
-  name: 'CuestionarioPreguntas',
+  name: 'CuestionarioReactivos',
   props: [
     'categoria',
     'selCategoria',
-    'preguntas',
+    'reactivos',
     'docentes',
     'respuestas'
   ],
-  // data: () => ({
-  //   respuestas: {}
-  // }),
-  watch: {
-    respuestas: {
-      handler() {
-        console.log(this.respuestas);
-      },
-      deep: true
-    }
-  },
   methods: {
     guardarRespuestas() {
       this.$emit('guardarRespuestas');
@@ -63,7 +52,7 @@ export default {
 
 <style scoped>
 
-.preguntas {
+.reactivos {
   padding: 0 12%;
   font-family: Roboto, sans-serif;
 }
@@ -74,11 +63,11 @@ export default {
   margin-bottom: 20px;
 }
 
-.pregunta {
+.reactivo {
   margin: 48px 0;
 }
 
-.pregunta h3 {
+.reactivo h3 {
   font-weight: 400;
   font-size: 1.6rem;
 }

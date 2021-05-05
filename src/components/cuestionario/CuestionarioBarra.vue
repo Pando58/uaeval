@@ -1,6 +1,6 @@
 <template>
   <div class="barra-progreso">
-    <div class="progreso">({{ numRespuestas }}/{{ numPreguntas }})</div>
+    <div class="progreso">({{ numRespuestas }}/{{ numReactivos }})</div>
     <div class="barra">
       <div class="completado" :style="estiloCompletado()"></div>
       <div class="faltante" :style="estiloFaltante()"></div>
@@ -14,7 +14,7 @@ export default {
   name: 'CuestionarioBarra',
   props: [
     'respuestas',
-    'numPreguntas'
+    'numReactivos'
   ],
   data: () => ({
     numRespuestas: 0
@@ -44,7 +44,7 @@ export default {
       return `flex-grow: ${this.numRespuestas}`;
     },
     estiloFaltante() {
-      return `flex-grow: ${this.numPreguntas - this.numRespuestas}`;
+      return `flex-grow: ${this.numReactivos - this.numRespuestas}`;
     }
   }
 }

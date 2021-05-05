@@ -6,7 +6,7 @@
     </div>
 
     <div class="nav d-flex" ref="nav">
-      <div class="nombre">{{ nombre }}</div>
+      <div class="nombre">{{ nombre }} <span style="margin: 0 0.4rem">·</span> {{ (grupo || {}).grupo }}</div>
       <div class="titulo">Evaluación Docente</div>
       <div class="menu">
         <div class="dropdown">
@@ -20,14 +20,14 @@
     
     <main>
       <div class="cuestionario">
-        <CuestionarioBarra ref="barra" :numPreguntas="preguntas.length" :respuestas="respuestas"/>
+        <CuestionarioBarra ref="barra" :numReactivos="reactivos.length" :respuestas="respuestas"/>
         <!-- <hr> -->
-        <CuestionarioPreguntas
+        <CuestionarioReactivos
         v-for="(cat, i) in categorias"
         :key="i"
         :categoria="cat"
         :selCategoria="categoria"
-        :preguntas="getPreguntas(cat)"
+        :reactivos="getReactivos(cat)"
         :respuestas="respuestas"
         :docentes="docentes"
         @guardarRespuestas="guardarRespuestas"
@@ -42,43 +42,26 @@
 <script>
 
 import CuestionarioBarra from '../components/cuestionario/CuestionarioBarra'
-import CuestionarioPreguntas from '../components/cuestionario/CuestionarioPreguntas'
+import CuestionarioReactivos from '../components/cuestionario/CuestionarioReactivos'
 import CuestionarioNav from '../components/cuestionario/CuestionarioNav'
 import { cerrarSesion, revisarSesion } from '../extras/funciones'
+import api from '../extras/api'
 
 export default {
   name: 'Cuestionario',
   components: {
     CuestionarioBarra,
-    CuestionarioPreguntas,
+    CuestionarioReactivos,
     CuestionarioNav
   },
   data: () => ({
-    nombre: '',
+    nombre: '...',
+    grupo: null,
     categoria: 1,
-    respuestas: {},
-    categorias: [
-      { id: 1, categoria: 'Categoria uno'},
-      { id: 2, categoria: 'Categoria dos'},
-      { id: 3, categoria: 'Categoria tres'},
-    ],
-    preguntas: [
-      { id: 1, pregunta: 'Pregunta uno', id_categoria: 1 },
-      { id: 2, pregunta: 'Pregunta dos', id_categoria: 1 },
-      { id: 3, pregunta: 'Pregunta tres', id_categoria: 1 },
-      { id: 4, pregunta: 'Pregunta cuatro', id_categoria: 2 },
-      { id: 5, pregunta: 'Pregunta cinco', id_categoria: 2 },
-      { id: 6, pregunta: 'Pregunta seis', id_categoria: 3 },
-      { id: 7, pregunta: 'Pregunta siete', id_categoria: 3 },
-      { id: 8, pregunta: 'Pregunta ocho', id_categoria: 3 },
-      { id: 9, pregunta: 'Pregunta nueve', id_categoria: 3 }
-    ],
-    docentes: [
-      { id: 1, nombres: 'Docente', apellido_p: 'Uno', apellido_m: '1'},
-      { id: 2, nombres: 'Docente', apellido_p: 'Dos', apellido_m: '2'},
-      { id: 3, nombres: 'Docente', apellido_p: 'Tres', apellido_m: '3'},
-      { id: 4, nombres: 'Docente', apellido_p: 'Cuatro', apellido_m: '4'}
-    ],
+    categorias: [{ id: 1, categoria: '' }],
+    reactivos: [{ id: 1, reactivo: '', id_categoria: 1 }],
+    docentes: [{ id: 1, nombres: '', apellido_p: '', apellido_m: ''}],
+    respuestas: { 1: { 1: null } },
   }),
   mounted: function() {
     const observer = new IntersectionObserver( 
@@ -91,23 +74,75 @@ export default {
   created: function() {
     const sesion = revisarSesion(this, false);
 
-    if (sesion.token) {
-      this.nombre = `${sesion.payload.data.nombres} ${sesion.payload.data.apellido_p} ${sesion.payload.data.apellido_m}`;
-    } else {
-      this.nombre = '...';
-    }
+    if (sesion.token) this.nombre = `${sesion.payload.data.nombres} ${sesion.payload.data.apellido_p} ${sesion.payload.data.apellido_m}`;
 
-    // Inicializar preguntas - Falta consulta a la API
-    this.preguntas.forEach(i => {
-      this.respuestas[i.id] = {};
-      this.docentes.forEach(j => {
-        this.respuestas[i.id][j.id] = null; // Math.floor((Math.random() * 5) + 1)
-      });
-    });
+    // Inicializar reactivos - Falta consulta a la API
+    const authHeader = {headers: { 'Authorization': `Bearer ${sesion.token}` }};
+    const onError = (err) => {
+      console.error(err);
+      console.error(err.response);
+      this.cerrarSesion();
+    };
+    
+    api.get('/api/grupos', authHeader)
+    .then(res => {
+      const res_grupo = res.data.find(x => x.id == sesion.payload.data.id_grupo);
+      const grupo = {
+        id: parseInt(res_grupo.id),
+        grupo: res_grupo.grupo,
+        id_docentes: JSON.parse(res_grupo.id_docentes)
+      };
+
+      api.get('/api/docentes', authHeader)
+      .then(res => {
+        const docentes = res.data.filter(x => grupo.id_docentes.includes(parseInt(x.id))).map(x => ({
+          id: parseInt(x.id),
+          nombres: x.nombres,
+          apellido_p: x.apellido_p,
+          apellido_m: x.apellido_m
+        }));
+
+        api.get('/api/categorias', authHeader)
+        .then(res => {
+          const categorias = res.data.map(x => ({
+            id: parseInt(x.id),
+            categoria: x.categoria
+          }));
+
+          api.get('/api/reactivos', authHeader)
+          .then(res => {
+            const reactivos = res.data.map(x => ({
+              id: parseInt(x.id),
+              reactivo: x.reactivo,
+              id_categoria: parseInt(x.id_categoria)
+            }));
+
+            this.grupo = grupo;
+            this.docentes = docentes;
+            this.categorias = categorias;
+            this.reactivos = reactivos;
+            this.categoria = categorias[0].id;
+
+            this.respuestas = {};
+
+            this.reactivos.forEach(i => {
+              this.respuestas[i.id] = {};
+              this.docentes.forEach(j => {
+                this.respuestas[i.id][j.id] = null;
+              });
+            });
+          })
+          .catch(err => onError(err));
+        })
+        .catch(err => onError(err));
+      })
+      .catch(err => onError(err));
+    })
+    .catch(err => onError(err));
   },
   methods: {
-    getPreguntas: function(cat) {      
-      return this.preguntas.filter(i => i.id_categoria == cat.id).sort((a, b) => {
+    getReactivos: function(cat) {      
+      return this.reactivos.filter(i => i.id_categoria == cat.id).sort((a, b) => {
         if (a.id < b.id) return -1;
         if (a.id > b.id) return 1;
         return 0;
@@ -118,12 +153,14 @@ export default {
     },
     guardarRespuestas: function() {
       // Llamar a la API
-      console.log(this.respuestas);
+      // console.log(this.respuestas);
       
       this.$refs.barra.actualizar();
     },
-    cambiarCategoria: function(direccion) {
-      if (this.categorias.find(i => i.id == this.categoria + direccion)) {
+    cambiarCategoria: function(siguiente) {
+      const direccion = siguiente ? 1 : -1;
+      const index = this.categorias.findIndex(x => x.id == this.categoria);
+      if (this.categorias[index + direccion]) {
         this.categoria += direccion;
         setTimeout(() => window.scrollTo(0,0), 100);
       }

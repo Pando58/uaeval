@@ -1,7 +1,7 @@
 <template>
   <div class="navegacion">
-    <a @click="cambiarCategoria(false)" :class="claseHayCategoria(-1)"><i class="fas fa-arrow-left izq"></i>Anterior</a>
-    <a @click="cambiarCategoria(true)" :class="claseHayCategoria(1)">Siguiente<i class="fas fa-arrow-right der"></i></a>
+    <a @click="cambiarCategoria(false)" :class="claseHayCategoria(false)"><i class="fas fa-arrow-left izq"></i>Anterior</a>
+    <a @click="cambiarCategoria(true)" :class="claseHayCategoria(true)">Siguiente<i class="fas fa-arrow-right der"></i></a>
   </div>
 </template>
 
@@ -15,10 +15,12 @@ export default {
   ],
   methods: {
     cambiarCategoria(siguiente) {
-      this.$emit('cambiarCategoria', siguiente ? 1 : -1);
+      this.$emit('cambiarCategoria', siguiente);
     },
-    claseHayCategoria(direccion) {
-      return this.categorias.find(i => i.id == this.categoria + direccion) ? '' : 'deshabilitado';
+    claseHayCategoria(siguiente) {
+      const direccion = siguiente ? 1 : -1;
+      const index = this.categorias.findIndex(x => x.id == this.categoria);
+      return this.categorias[index + direccion] ? '' : 'deshabilitado';
     }
   }
 }
