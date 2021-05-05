@@ -6,9 +6,12 @@
     </div>
 
     <div class="nav d-flex" ref="nav">
-      <div class="nombre">{{ nombre }} <span style="margin: 0 0.4rem">·</span> {{ (grupo || {}).grupo }}</div>
+      <div class="nombre">{{ nombre }}</div>
       <div class="titulo">Evaluación Docente</div>
       <div class="menu">
+        {{ matricula }}
+        <span style="margin: 0 0.5rem">·</span>
+        {{ (grupo || {}).grupo }}
         <div class="dropdown">
           <i class="fas fa-chevron-down"></i>
           <div class="dropdown-content">
@@ -57,6 +60,7 @@ export default {
   data: () => ({
     nombre: '...',
     grupo: null,
+    matricula: '',
     categoria: 1,
     categorias: [{ id: 1, categoria: '' }],
     reactivos: [{ id: 1, reactivo: '', id_categoria: 1 }],
@@ -74,7 +78,10 @@ export default {
   created: function() {
     const sesion = revisarSesion(this, false);
 
-    if (sesion.token) this.nombre = `${sesion.payload.data.nombres} ${sesion.payload.data.apellido_p} ${sesion.payload.data.apellido_m}`;
+    if (sesion.token) {
+      this.nombre = `${sesion.payload.data.nombres} ${sesion.payload.data.apellido_p} ${sesion.payload.data.apellido_m}`;
+      this.matricula = sesion.payload.data.usuario;
+    };
 
     // Inicializar reactivos - Falta consulta a la API
     const authHeader = {headers: { 'Authorization': `Bearer ${sesion.token}` }};
@@ -153,7 +160,7 @@ export default {
     },
     guardarRespuestas: function() {
       // Llamar a la API
-      // console.log(this.respuestas);
+      console.log(this.respuestas);
       
       this.$refs.barra.actualizar();
     },
