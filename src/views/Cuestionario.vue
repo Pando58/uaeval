@@ -23,7 +23,7 @@
     
     <main>
       <div class="cuestionario">
-        <CuestionarioBarra ref="barra" :numReactivos="reactivos.length" :respuestas="respuestas"/>
+        <CuestionarioBarra :numReactivos="reactivos.length" :respuestas="respuestas" :numRespuestas="numReactivosContestados()"/>
         <!-- <hr> -->
         <CuestionarioReactivos
         v-for="(cat, i) in categorias"
@@ -66,6 +66,7 @@ export default {
     reactivos: [{ id: 1, reactivo: '', id_categoria: 1 }],
     docentes: [{ id: 1, nombres: '', apellido_p: '', apellido_m: ''}],
     respuestas: { 1: { 1: null } },
+    mensajeCompletado: false
   }),
   mounted: function() {
     const observer = new IntersectionObserver( 
@@ -145,7 +146,7 @@ export default {
                 });
               }
 
-              this.$refs.barra.actualizar(this.respuestas);
+              this.revisarCompletado();
             })
             .catch(err => console.log(err.response));
           })
@@ -176,12 +177,42 @@ export default {
       }, {
         headers: { 'Authorization': `Bearer ${sesion.token}` }
       }).then(res => {
-        console.log(res);
+        this.revisarCompletado();
       }).catch(err => {
         console.log(err.response);
       });
-      
-      this.$refs.barra.actualizar(this.respuestas);
+    },
+    numReactivosContestados() {
+      let num = 0;
+
+      for (let i in this.respuestas) {
+        let completado = true;
+        
+        for (let j in this.respuestas[i]) {
+          if (this.respuestas[i][j] == null) {
+            completado = false;
+            break;
+          }
+        }
+
+        if (completado) {
+          num++;
+        }
+      }
+
+      return num;
+    },
+    revisarCompletado() {
+      if (this.numReactivosContestados() >= this.reactivos.length && !this.mensajeCompletado) {
+        this.$swal.fire({
+          icon: 'success',
+          title: 'Cuestionario completado',
+          html: 'Puedes cerrar sesión en el icono&nbsp;&nbsp;<b>" <i class="fas fa-chevron-down"></i> "</b>&nbsp;&nbsp;en la parte superior derecha.',
+          showCloseButton: true,
+          confirmButtonText: 'Aceptar'
+        });
+        this.mensajeCompletado = true;
+      }
     },
     cambiarCategoria: function(siguiente) {
       const direccion = siguiente ? 1 : -1;

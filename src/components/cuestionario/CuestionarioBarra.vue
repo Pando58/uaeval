@@ -14,14 +14,15 @@ export default {
   name: 'CuestionarioBarra',
   props: [
     'respuestas',
-    'numReactivos'
+    'numReactivos',
+    'numRespuestas'
   ],
-  data: () => ({
+  /* data: () => ({
     numRespuestas: 0
-  }),
+  }), */
   methods: {
     actualizar(respuestas) {      
-      let num = 0;
+      /* let num = 0;
 
       for (let i in respuestas) {
         let completado = true;
@@ -38,7 +39,7 @@ export default {
         }
       }
 
-      this.numRespuestas = num;
+      this.numRespuestas = num; */
     },
     estiloCompletado() {
       return `flex-grow: ${this.numRespuestas}`;

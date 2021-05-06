@@ -42,6 +42,17 @@ a {
   max-height: 0px;
 }
 
+/* SweelAlert2 */
+.swal2-title,
+.swal2-content,
+.swal2-popup button {
+  font-family: Poppins, sans-serif !important;
+}
+
+.swal2-popup button {
+  letter-spacing: 0.07rem;
+}
+
 /* CLASES DE AYUDA */
 
 .d-flex {
