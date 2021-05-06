@@ -227,7 +227,7 @@ hr {
   justify-content: space-between;
   align-items: center;
   z-index: 10;
-  background: rgba(0, 0, 0, 0);
+  background: rgb(25, 155, 79);
   font-family: Rubik, sans-serif;
   color: #FFF;
   text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);

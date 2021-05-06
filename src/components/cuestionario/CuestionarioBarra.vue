@@ -55,7 +55,7 @@ export default {
 
 .barra-progreso {
   position: sticky;
-  top: 59px;
+  top: 58px;
   background: #FFF;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   z-index: 9;
