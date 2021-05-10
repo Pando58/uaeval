@@ -9,3 +9,14 @@
     </transition>
   </div>
 </template>
+
+<script>
+
+export default {
+  name: 'App',
+  created() {
+    document.title = 'Evaluación Docente - Universidad Alva Edison'
+  }
+}
+
+</script>
