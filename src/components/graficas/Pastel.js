@@ -17,6 +17,6 @@ export default {
         data: this.datos,
         backgroundColor: this.colores
       }]
-    }, {responsive: true, maintainAspectRatio: false})
+    });
   }
 }
