@@ -6,7 +6,7 @@
       <div id="contenedorPagina">
         <h3 class="tituloVista">{{ vista }}</h3>
         <transition name="fade" mode="out-in">
-          <AdminEstadisticas v-if="vista == 'estadisticas'"/>
+          <AdminEstadisticas v-if="vista == 'estadísticas'"/>
           
           <AdminAlumnos v-if="vista == 'alumnos'"/>
           <AdminGrupos v-if="vista == 'grupos'"/>
@@ -41,7 +41,7 @@ export default {
   name: 'PanelAdmin',
   data: () => ({
     anchoSidebar: 240,
-    vista: 'estadisticas',
+    vista: 'estadísticas',
     nombre: '',
   }),
   components: {

@@ -25,7 +25,7 @@ export default {
     return {
       datosMenu: [
         { nombre: 'General', vista: 'general', tipo: 'titulo' },
-        { id: 0, nombre: 'Estadísticas', vista: 'estadisticas', tipo: 'entrada', icono: 'far fa-chart-bar' },
+        { id: 0, nombre: 'Estadísticas', vista: 'estadísticas', tipo: 'entrada', icono: 'far fa-chart-bar' },
 
         { nombre: 'Usuarios', tipo: 'titulo' },
         { id: 1, nombre: 'Alumnos', vista: 'alumnos', tipo: 'entrada', icono: 'fas fa-user-friends' },
@@ -44,7 +44,7 @@ export default {
   },
   computed: {
     anchoEnCSS() {
-      return `width: ${ this.ancho }px;`;
+      return `min-width: ${ this.ancho }px;`;
     },
   },
   methods: {
