@@ -2,16 +2,13 @@
   <div id="admin-estadisticas">
     <h3 class="titulo-graficas">Resultados por categoría</h3>
     <div class="graficas">
-      <div class="container-grafica">
-        <div class="titulo-cat" v-if="categoriaSeleccionada != null">
-          <select id="selCategoriaGrafica" v-model="categoriaSeleccionada" @change="actualizarGrafica">
-            <option v-for="(cat, i) in categorias" :key="i" :value="cat.id">{{ cat.categoria }}</option>
-          </select>
-          <i class="fas fa-chevron-down"></i>
-          <!-- <h3>{{ getTituloCategoria() }}</h3> -->
-        </div>
-        <pastel v-if="categoriaSeleccionada != null" :chart-data="chartData"></pastel>
-      </div>
+      <grafica-pastel 
+        :categoriaSeleccionada="categoriaSeleccionada"
+        :categorias="categorias"
+        :chartData="chartData"
+        @actualizarGrafica="actualizarGrafica"
+        v-if="categoriaSeleccionada != null"
+      />
       <div class="leyenda">
         <div class="etiqueta" v-for="(et, i) in etiquetas" v-bind:key="i">
           <div class="color" :style="`background-color: ${colores[i]}`"></div>
@@ -24,14 +21,14 @@
 
 <script>
 
-import Pastel from '@/components/graficas/Pastel.js'
 import api from '@/extras/api.js'
 import { revisarSesion } from '@/extras/funciones.js'
+import GraficaPastel from '@/components/vistasAdmin/Estadisticas/GraficaPastel.vue'
 
 export default {
   name: 'AdminEstadisticas',
   components: {
-    Pastel
+    GraficaPastel
   },
   data: () => ({
     categoriaSeleccionada: null,
@@ -119,8 +116,11 @@ export default {
     getTituloCategoria() {
       return this.categorias.find(i => i.id == this.categoriaSeleccionada).categoria;
     },
-    actualizarGrafica() {
-      console.log(this.datosCategorias[this.categoriaSeleccionada]);
+    actualizarGrafica(catSel) {
+      if (catSel) {
+        this.categoriaSeleccionada = catSel;
+      }
+
       this.chartData = {
         labels: this.etiquetasNumeros,
         datasets: [{
@@ -152,55 +152,6 @@ export default {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   place-items: center stretch;
-}
-
-.container-grafica {
-  grid-column: 2 / span 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 11px 12px;
-  padding: 0 0 22px 0;
-  background: #FFF;
-  box-shadow: 0 0 14px #0001;
-  border-radius: 3px;
-}
-
-.titulo-cat {
-  position: relative;
-  width: 100%;
-  padding: 0;
-  margin-bottom: 12px;
-  border-bottom: 1px solid #0002;
-}
-
-.titulo-cat i {
-  position: absolute;
-  font-size: 1rem;
-  top: 0.8em;
-  right: 0.8em;
-}
-
-#selCategoriaGrafica {
-  font-family: Poppins, sans-serif;
-  font-size: 1rem;
-  font-weight: 500;
-  width: 100%;
-  padding: 0.5em 0.8em;
-  appearance: none;
-  border: none;
-  cursor: pointer;
-  outline: none;
-}
-
-#selCategoriaGrafica:hover {
-  background: #00000018;
-}
-
-#selCategoriaGrafica option {
-  color: #444;
-  background: #FFF;
 }
 
 .leyenda {
