@@ -1,22 +1,22 @@
 <template>
   <div id="admin-estadisticas">
-    <div class="leyenda">
-      <div class="etiqueta" v-for="(et, i) in etiquetas" v-bind:key="i">
-        <div class="color" :style="`background-color: ${colores[i]}`"></div>
-        <span><b>{{ etiquetasNumeros[i] }} ·</b> {{ et }}</span>
-      </div>
-    </div>
+    <h3 class="titulo-graficas">Resultados por categoría</h3>
     <div class="graficas">
-      <div class="container-grafica" v-for="(cat, i) in categorias" :key="i">
-        <div class="titulo-cat">
-          <h3>{{ cat.categoria }}</h3>
+      <div class="container-grafica">
+        <div class="titulo-cat" v-if="categoriaSeleccionada != null">
+          <select id="selCategoriaGrafica" v-model="categoriaSeleccionada" @change="actualizarGrafica">
+            <option v-for="(cat, i) in categorias" :key="i" :value="cat.id">{{ cat.categoria }}</option>
+          </select>
+          <i class="fas fa-chevron-down"></i>
+          <!-- <h3>{{ getTituloCategoria() }}</h3> -->
         </div>
-        <pastel v-if="listo"
-          :etiquetas="etiquetasNumeros"
-          :datos="Object.values(datosCategorias[cat.id])"
-          :titulo="cat"
-          :colores="colores"
-        ></pastel>
+        <pastel v-if="categoriaSeleccionada != null" :chart-data="chartData"></pastel>
+      </div>
+      <div class="leyenda">
+        <div class="etiqueta" v-for="(et, i) in etiquetas" v-bind:key="i">
+          <div class="color" :style="`background-color: ${colores[i]}`"></div>
+          <span><b>{{ etiquetasNumeros[i] }} ·</b> {{ et }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -34,8 +34,7 @@ export default {
     Pastel
   },
   data: () => ({
-    listo: false,
-    titulo: 'hola',
+    categoriaSeleccionada: null,
     etiquetas: [
       'Altamente en desacuerdo',
       'En desacuerdo',
@@ -48,12 +47,13 @@ export default {
       '2',
       '3',
       '4',
-      '5'
+      '5' 
     ],
     categorias: null,
     datosReactivos: {},
     datosCategorias: {},
-    colores: ['#f73636', '#ffa836', '#ffea42', '#b9ed4a', '#32d45a']
+    colores: ['#f73636', '#ffa836', '#ffea42', '#b9ed4a', '#32d45a'],
+    chartData: null
   }),
   mounted() {
     const { token, payload } = revisarSesion(this, true);
@@ -103,11 +103,10 @@ export default {
                 return a;
               });
           });
-          
-          // console.log(this.categorias[0].categoria);
-          // console.log(Object.values(this.datosCategorias[1]));
-          
-          this.listo = true;
+
+          this.categoriaSeleccionada = this.categorias[0].id;
+
+          this.actualizarGrafica();
         })
       })
     })
@@ -115,6 +114,21 @@ export default {
       console.log(err);
       console.log(err.response);
     });
+  },
+  methods: {
+    getTituloCategoria() {
+      return this.categorias.find(i => i.id == this.categoriaSeleccionada).categoria;
+    },
+    actualizarGrafica() {
+      console.log(this.datosCategorias[this.categoriaSeleccionada]);
+      this.chartData = {
+        labels: this.etiquetasNumeros,
+        datasets: [{
+          data: Object.values(this.datosCategorias[this.categoriaSeleccionada]),
+          backgroundColor: this.colores
+        }]
+      };
+    }
   }
 }
 
@@ -122,13 +136,26 @@ export default {
 
 <style scoped>
 
+* {
+  color: #313A46;
+}
+
+.titulo-graficas {
+  text-align: center;
+  font-family: Poppins, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 6px 0;
+}
+
 .graficas {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   place-items: center stretch;
 }
 
 .container-grafica {
+  grid-column: 2 / span 2;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -140,24 +167,43 @@ export default {
   border-radius: 3px;
 }
 
-h3 {
-  font-family: Poppins, sans-serif;
-  font-size: 1rem;
-  font-weight: 500;
-  margin: 0;
-}
-
 .titulo-cat {
+  position: relative;
   width: 100%;
-  padding: 0.5em 0.8em;
+  padding: 0;
   margin-bottom: 12px;
   border-bottom: 1px solid #0002;
 }
 
+.titulo-cat i {
+  position: absolute;
+  font-size: 1rem;
+  top: 0.8em;
+  right: 0.8em;
+}
+
+#selCategoriaGrafica {
+  font-family: Poppins, sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  width: 100%;
+  padding: 0.5em 0.8em;
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+#selCategoriaGrafica:hover {
+  background: #00000018;
+}
+
+#selCategoriaGrafica option {
+  color: #444;
+  background: #FFF;
+}
+
 .leyenda {
-  display: flex;
-  justify-content: space-between;
-  margin: 0 1em;
   font-family: Roboto, sans-serif;
   font-size: 1rem;
   padding: 1em;

@@ -1,22 +1,11 @@
-import { Doughnut } from 'vue-chartjs'
+import { Doughnut, mixins } from 'vue-chartjs'
+const { reactiveProp } = mixins;
 
 export default {
   name: 'Pastel',
   extends: Doughnut,
-  props: [
-    'etiquetas',
-    'datos',
-    'titulo',
-    'colores'
-  ],
+  mixins: [reactiveProp],
   mounted () {
-    this.renderChart({
-      labels: this.etiquetas,
-      datasets: [{
-        label: this.titulo,
-        data: this.datos,
-        backgroundColor: this.colores
-      }]
-    });
+    this.renderChart(this.chartData);
   }
 }
