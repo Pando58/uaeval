@@ -92,70 +92,64 @@ export default {
       this.cerrarSesion();
     };
     
-    api.get('/api/grupos', authHeader)
-    .then(res => {
-      const res_grupo = res.data.find(x => x.id == sesion.payload.data.id_grupo);
+    api.get('/api/grupos', authHeader).then(({data: resGrupos}) => {
+    api.get('/api/docentes', authHeader).then(({data: resDocentes}) => {
+    api.get('/api/categorias', authHeader).then(({ data: resCategorias }) => {
+    api.get('/api/reactivos', authHeader).then(({ data: resReactivos }) => {
+    api.get(`/api/alumnos?id=${sesion.payload.data.id}`, authHeader).then(({ data: resAlumnos }) => {
+
+      // Grupos
+      const resGrupo = resGrupos.find(x => x.id == sesion.payload.data.id_grupo);
       const grupo = {
-        id: parseInt(res_grupo.id),
-        grupo: res_grupo.grupo,
-        id_docentes: JSON.parse(res_grupo.id_docentes)
+        id: parseInt(resGrupo.id),
+        grupo: resGrupo.grupo,
+        id_docentes: JSON.parse(resGrupo.id_docentes)
       };
 
-      api.get('/api/docentes', authHeader)
-      .then(res => {
-        const docentes = res.data.filter(x => grupo.id_docentes.includes(parseInt(x.id))).map(x => ({
-          id: parseInt(x.id),
-          nombres: x.nombres,
-          apellido_p: x.apellido_p,
-          apellido_m: x.apellido_m
-        }));
+      // Docentes
+      const docentes = resDocentes.filter(x => grupo.id_docentes.includes(parseInt(x.id))).map(x => ({
+        id: parseInt(x.id),
+        nombres: x.nombres,
+        apellido_p: x.apellido_p,
+        apellido_m: x.apellido_m
+      }));
 
-        api.get('/api/categorias', authHeader)
-        .then(res => {
-          const categorias = res.data.map(x => ({
-            id: parseInt(x.id),
-            categoria: x.categoria
-          }));
+      // Categorias
+      const categorias = resCategorias.map(x => ({
+        id: parseInt(x.id),
+        categoria: x.categoria
+      }));
 
-          api.get('/api/reactivos', authHeader)
-          .then(res => {
-            const reactivos = res.data.map(x => ({
-              id: parseInt(x.id),
-              reactivo: x.reactivo,
-              id_categoria: parseInt(x.id_categoria)
-            }));
-            
-            api.get(`/api/alumnos?id=${sesion.payload.data.id}`, authHeader)
-            .then(res => {
-              this.grupo = grupo;
-              this.docentes = docentes;
-              this.categorias = categorias;
-              this.reactivos = reactivos;
-              this.categoria = categorias[0].id;
-              
-              if (res.data[0].respuestas) {
-                this.respuestas = JSON.parse(res.data[0].respuestas);
-              } else {
-                this.respuestas = {};
-                
-                this.reactivos.forEach(i => {
-                  this.respuestas[i.id] = {};
-                  this.docentes.forEach(j => {
-                    this.respuestas[i.id][j.id] = null;
-                  });
-                });
-              }
+      // Reactivos
+      const reactivos = resReactivos.map(x => ({
+        id: parseInt(x.id),
+        reactivo: x.reactivo,
+        id_categoria: parseInt(x.id_categoria)
+      }));
 
-              this.revisarCompletado();
-            })
-            .catch(err => console.log(err.response));
-          })
-          .catch(err => onError(err));
-        })
-        .catch(err => onError(err));
-      })
-      .catch(err => onError(err));
-    })
+      // Alumnos
+      this.grupo = grupo;
+      this.docentes = docentes;
+      this.categorias = categorias;
+      this.reactivos = reactivos;
+      this.categoria = categorias[0].id;
+      
+      if (resAlumnos[0].respuestas) {
+        this.respuestas = JSON.parse(resAlumnos[0].respuestas);
+      } else {
+        this.respuestas = {};
+        
+        this.reactivos.forEach(i => {
+          this.respuestas[i.id] = {};
+          this.docentes.forEach(j => {
+            this.respuestas[i.id][j.id] = null;
+          });
+        });
+      }
+
+      this.revisarCompletado();
+
+    })})})})})
     .catch(err => onError(err));
   },
   methods: {

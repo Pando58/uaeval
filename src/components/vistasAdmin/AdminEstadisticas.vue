@@ -67,52 +67,49 @@ export default {
       }
     };
     
-    api.get('/api/categorias', apiOpts)
-    .then(({ data: categorias }) => {      
-      api.get('/api/reactivos', apiOpts)
-      .then(({ data: reactivos }) => {
-        api.get('/api/alumnos', apiOpts)
-        .then(({ data: alumnos }) => {
-          this.categorias = categorias;
-          
-          // Inicializar conteo de reactivos
-          Object.values(reactivos).forEach(({ id: i }) => {
-            this.datosReactivos[i] = {};
-            for (let j = 1; j <= 5; j++) {
-              this.datosReactivos[i][j] = 0;
+    api.get('/api/categorias', apiOpts).then(({ data: categorias }) => {      
+    api.get('/api/reactivos', apiOpts).then(({ data: reactivos }) => {
+    api.get('/api/alumnos', apiOpts).then(({ data: alumnos }) => {
+      
+      this.categorias = categorias;
+      
+      // Inicializar conteo de reactivos
+      Object.values(reactivos).forEach(({ id: i }) => {
+        this.datosReactivos[i] = {};
+        for (let j = 1; j <= 5; j++) {
+          this.datosReactivos[i][j] = 0;
+        }
+      });
+
+      // Contar las respuestas
+      alumnos.filter(i => i.respuestas).forEach(({ respuestas: resp }) => {
+        resp = JSON.parse(resp);
+
+        Object.keys(resp).forEach(i => { // id reactivo
+          Object.keys(resp[i]).forEach(j => { // id docente
+            this.datosReactivos[i][resp[i][j]]++;
+          });
+        });
+      });
+
+      // Agrupar por categorias
+      Object.values(categorias).forEach(({ id: id_cat }) => {
+        this.datosCategorias[id_cat] = Object.keys(this.datosReactivos)
+          .filter(i => reactivos.find(j => j.id == i).id_categoria == id_cat)
+          .map(i => this.datosReactivos[i]).reduce((a, b) => {
+            for (let i in b) {
+              a[i] += b[i];
             }
+
+            return a;
           });
+      });
 
-          // Contar las respuestas
-          alumnos.filter(i => i.respuestas).forEach(({ respuestas: resp }) => {
-            resp = JSON.parse(resp);
+      this.categoriaSeleccionada = this.categorias[0].id;
 
-            Object.keys(resp).forEach(i => { // id reactivo
-              Object.keys(resp[i]).forEach(j => { // id docente
-                this.datosReactivos[i][resp[i][j]]++;
-              });
-            });
-          });
+      this.actualizarGrafica();
 
-          // Agrupar por categorias
-          Object.values(categorias).forEach(({ id: id_cat }) => {
-            this.datosCategorias[id_cat] = Object.keys(this.datosReactivos)
-              .filter(i => reactivos.find(j => j.id == i).id_categoria == id_cat)
-              .map(i => this.datosReactivos[i]).reduce((a, b) => {
-                for (let i in b) {
-                  a[i] += b[i];
-                }
-
-                return a;
-              });
-          });
-
-          this.categoriaSeleccionada = this.categorias[0].id;
-
-          this.actualizarGrafica();
-        })
-      })
-    })
+    })})})
     .catch(err => {
       console.log(err);
       console.log(err.response);
