@@ -1,5 +1,8 @@
 <template>
   <div id="login-main" class="bg1">
+    <div class="info">
+      Desarrollado por <a href="https://github.com/Pando58">Enrique Pando</a> para <a href="https://unialvaedison.edu.mx/">Universidad Alva Edison A.C.</a>
+    </div>
     <div class="login-container" :class="estiloLogin().marco">      
         <transition name="fadeResize">
           <div class='flecha-atras' v-if="loginAdmin" @click="switchLoginAdmin()">
@@ -127,6 +130,7 @@ export default {
 <style>
 
 #login-main {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -158,7 +162,7 @@ export default {
 }
 
 #login-main .login-container.admin {
-  border: 2px solid rgb(43, 189, 74);
+  border: 2px solid #2bbd4a;
 }
 
 @media (max-width: 600px) {
@@ -181,7 +185,7 @@ export default {
 #login-main .subtitulo {
   font-size: 1.2rem;
   font-weight: 400;
-  color: rgb(22, 160, 68);
+  color: #16a044;
   margin-top: 0px;
   margin-bottom: 18px;
 }
@@ -191,7 +195,7 @@ export default {
   color: #FFF;
   font-size: 1rem;
   padding: 8px;
-  background-color: rgb(31, 180, 106);
+  background-color: #1fb46a;
   border: 0;
   border-radius: 7px;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
@@ -201,11 +205,11 @@ export default {
 }
 
 #login-main .form-button:hover {
-  background-color: rgb(34, 194, 114);
+  background-color: #22c272;
 }
 
 #login-main .form-button:active {
-  background-color: rgb(31, 180, 106);
+  background-color: #1fb46a;
 }
 
 #login-main .logo {
@@ -213,7 +217,7 @@ export default {
 }
 
 #login-main .mensaje-password a {
-  color: rgb(31, 180, 106);
+  color: #1fb46a;
 }
 
 #login-main .admin-login i {
@@ -224,7 +228,7 @@ export default {
 
 #login-main .admin-login a {
   text-decoration: none;
-  color: rgb(45, 151, 238);
+  color: #2d97ee;
 }
 
 #login-main .login-error-msg {
@@ -238,9 +242,21 @@ export default {
 }
 
 #login-main .flecha-atras i {
-  color: rgb(42, 187, 107);
+  color: #2abb6b;
   font-size: 1.3rem;
   cursor: pointer;
+}
+
+#login-main .info {
+  position: absolute;
+  right: 0.5em;
+  bottom: 0.5em;
+  color: #555;
+}
+
+#login-main .info a {
+  text-decoration: none;
+  color: #16a044;
 }
 
 </style>
